@@ -15,30 +15,13 @@ module.exports = function(wagner) {
 
     mongoose.connect(uri);
 
+    /*
+     * TODO: Define mongoose schema models in separate .js files and
+     *       require them as necessary inside models
+     *
+     *       Then, loop through each one and add them to wagner as a service
+     */
     var models = {};
     return models;
   });
-
-/*
-  var Category =
-    mongoose.model('Category', require('./category'), 'categories');
-  var User =
-    mongoose.model('User', require('./user'), 'users');
-
-  var models = {
-    Category: Category,
-    User: User
-  };
-
-  // To ensure DRY-ness, register factories in a loop
-  _.each(models, function(value, key) {
-    wagner.factory(key, function() {
-      return value;
-    });
-  });
-
-  wagner.factory('Product', require('./product'));
-
-  return models;
 };
-*/

@@ -1,12 +1,20 @@
-<html>
+<!DOCTYPE html>
+<html ng-app="warframeTrade">
   <head>
+    <meta charset="utf-8">
     <title>Warframe Trading Board!</title>
+
+    <!-- Required external libraries  -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-    <script src="ng/app.js"></script>
+    <script src="lib/js/angular-ui-router.min.js"></script>
+
+    <!-- This app's scripts -->
+    <script src="bin/app.js"></script>
+
   </head>
-  <body ng-app="warframeTrade" ng-controller="MainCtrl">
-    <div>
-      Hello from index.html!
-    </div>
+  <body>
+    <a ui-sref="buy">Buy</a>
+    <a ui-sref="sell">Sell</a>
+    <div ui-view></div>
   </body>
 </html>
