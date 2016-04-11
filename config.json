@@ -1,0 +1,9 @@
+{
+  "warframeDB": {
+    "hostname": "ds017070.mlab.com",
+    "port": 17070,
+    "user": "warframe_admin",
+    "password": "warframepass",
+    "dbName": "warframe_trades"
+  }
+}
