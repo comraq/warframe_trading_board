@@ -2,8 +2,9 @@ var express = require("express"),
     morgan = require("morgan"),
     wagner = require("wagner-core");
 
-require("./models/index")(wagner);
+// Dependencies must be required before the others!
 require('./dependencies')(wagner);
+require("./models/models")(wagner);
 
 var app = express(),
     port = process.argv[2] || process.env.PORT || 80;
