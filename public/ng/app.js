@@ -34,4 +34,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
       url: "/list",
       template: "<sell-list></sell-list>"
     })
+    .state("signIn", {
+      url: "/signIn",
+      template: "Sign In Template Stub"
+    })
 });
