@@ -1,16 +1,16 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
-var categorySchema = {
+var categoryObject = {
   _id: { type: String, required: true },
   parent: {
     type: String,
-    ref: 'Category'
+    ref: "Category"
   },
   ancestors: [{
     type: String,
-    ref: 'Category'
+    ref: "Category"
   }]
 };
 
-module.exports = new mongoose.Schema(categorySchema);
-module.exports.categorySchema = categorySchema;
+var schema = new mongoose.Schema(categoryObject);
+module.exports = mongoose.model("Category", schema, "categories");

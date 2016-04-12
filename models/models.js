@@ -1,4 +1,7 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose"),
+    CategoryModel = require("./category"),
+    PostModel = require("./post_alternate"),
+    UserModel = require("./user");
 
 module.exports = function(wagner) {
   wagner.invoke(function(Config) {
@@ -23,21 +26,16 @@ module.exports = function(wagner) {
     return mongoose;
   });
 
-  /*
-   * TODO: Define mongoose schema models in separate .js files and
-   *       require them as necessary inside models
-   *
-   *       Then, loop through each one and add them to wagner as a service
-   */
-  var Category = mongoose.model('Category',
-                                require('./category'),
-                                'categories');
-  var Post = mongoose.model('Post',
-                            require('./post'),
-                            'posts');
+/*
+ * TODO: Define mongoose schema models in separate .js files and
+ *       require them as necessary inside models
+ *
+ *       Then, loop through each one and add them to wagner as a service
+ */
   var models = {
-    Category: Category,
-    Post: Post
+    Category: CategoryModel,
+    Post: PostModel,
+    User: UserModel
   };
 
   // DRY, register factories/servies in a loop
@@ -46,8 +44,6 @@ module.exports = function(wagner) {
       return models[modelName];
     });
   };
-
-  wagner.factory('Item', require('./item'));
 
   return models;
 };

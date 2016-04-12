@@ -1,13 +1,11 @@
-var CategoryModel = require('./category'),
-    mongoose = require('mongoose');
+var CategoryModel = require("./category"),
+    ItemModel = require("./item"),
+    mongoose = require("mongoose");
 
 var postObject = {
   user: { type: String, required: true },
   category: CategoryModel.schema,
-  items: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Item"
-  }]
+  items: [ItemModel.schema]
 };
 
 var schema = new mongoose.Schema(postObject);
