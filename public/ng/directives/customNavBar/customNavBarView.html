@@ -20,6 +20,9 @@
     <ul class="nav navbar-nav navbar-right">
       <!-- Navigation when Signed Out -->
       <li ng-if="!user.user">
+        <a href="/auth/steam/">Steam</a>
+      </li>
+      <li ng-if="!user.user">
         <a href="/auth/facebook/">Sign In</a>
       </li>
 
@@ -28,7 +31,7 @@
         <div class="user-info">
           Welcome, {{ user.user.name.first }} {{ user.user.name.last }}
           <img ng-src="{{ user.user.profile.picture }}" />
-          <a ui-sref="signOut">Sign Out</a>
+          <a href="" ng-click="ctrl.signOut()">Sign Out</a>
         </div>
       </li>
     </ul>

@@ -131,10 +131,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
       url: "/list",
       template: "<sell-list></sell-list>"
     })
-    .state("signIn", {
-      url: "/signIn",
-      template: "Sign In Template Stub"
-    })
 });
 
 },{"./directives/controllers":4,"./directives/directives":6,"./services/services":8}],3:[function(require,module,exports){
@@ -158,14 +154,36 @@ exports.customNavBarController =
   require("./customNavBar/customNavBarController.js");
 
 },{"./buyList/buyListController.js":3,"./customNavBar/customNavBarController.js":5,"./sellList/sellListController.js":7}],5:[function(require,module,exports){
-module.exports = function($scope, userService) {
-  // TODO: Controller Stub
+module.exports = function($scope, $state, $http, userSessionService) {
+  var debug = false;
+
+  $scope.ctrl = this;
   this.scope = $scope;
+  this.scope.user = userSessionService;
 
-  this.scope.user = userService;
+  if (debug) {
+    console.log("scope:")
+    console.log(this.scope);
+  }
 
-  console.log($scope);
-  console.log(userService);
+  this.signOut = function signOut() {
+    if (!this.scope.user)
+      return;
+
+    $http.get("/api/signOut")
+         .success(function(res) {
+           if (debug)
+             console.log("SignOut Successful!");
+
+           // Session Cleared but not redirected due to 
+           this.scope.user.user = res.user;
+           $state.go("buy");
+         }.bind(this))
+         .error(function(err) {
+           if (debug)
+             console.log("SignOut Failed!");
+         });
+  };
 };
 
 },{}],6:[function(require,module,exports){
@@ -204,29 +222,29 @@ module.exports = function($scope) {
 };
 
 },{}],8:[function(require,module,exports){
-exports.userService = require("./userService");
+exports.userSessionService = require("./userSessionService");
 
-},{"./userService":9}],9:[function(require,module,exports){
+},{"./userSessionService":9}],9:[function(require,module,exports){
 var httpStatus = require("http-status");
 
 module.exports = function($http) {
   var s = {};
 
   s.loadUser = function() {
-    $http.
-      get("/api/me").
-      success(function(data) {
-        s.user = data.user;
-      }).
-      error(function(data, httpStatus) {
-        if (httpStatus === httpStatus.UNAUTHORIZED) {
-          s.user = null;
-        }
-      });
+
+    $http.get("/api/me")
+         .success(function(res) {
+           s.user = res.user;
+         })
+         .error(function(res, httpStatus) {
+           if (httpStatus === httpStatus.UNAUTHORIZED)
+             s.user = null;
+         });
   };
 
   s.loadUser();
 
+  // Reload user session info from database every hour
   setInterval(s.loadUser, 60 * 60 * 1000);
 
   return s;

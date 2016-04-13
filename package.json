@@ -16,6 +16,7 @@
     "http-status": "^0.2.1",
     "mongoose": "^4.4.12",
     "morgan": "^1.7.0",
+    "passport-steam": "^1.0.1",
     "superagent": "^1.8.3",
     "wagner-core": "^0.2.0"
   },

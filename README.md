@@ -4,4 +4,4 @@ Warframe players.
 Commands:   
 npm start - launch the server listening on port 7777    
 npm run watchApp - automatically browserify .js files for clients browsers    
-npm test - automically watches for changes in .js files and reruns the sanity testSuite
+npm test [testSuite] - automically watches for changes in .js files and reruns the sanity testSuite (if no [testSuite] is specified)

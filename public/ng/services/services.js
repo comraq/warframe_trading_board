@@ -1,1 +1,1 @@
-exports.userService = require("./userService");
+exports.userSessionService = require("./userSessionService");

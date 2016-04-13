@@ -63,13 +63,6 @@ function setupAuth(User, app, Config) {
       successRedirect: "/",
       failureRedirect: "/auth/fail"
     }));
-/*
-    passport.authenticate("facebook", { failureRedirect: "/auth/fail" }),
-    function(req, res) {
-      res.send(req.user);
-      res.send("Welcome, " + req.user.profile.username);
-    });
-*/
 }
 
 module.exports = setupAuth;
