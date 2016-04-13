@@ -5,5 +5,16 @@
     "user": "warframe_admin",
     "password": "warframepass",
     "dbName": "warframe_trades"
-  }
+  },
+  "facebookAuth": {
+    "clientId": "1037655489628698",
+    "clientSecret": "7d6323bc504e80ecc5d74bde0c5ffcdf",
+    "url": "/auth/facebook",
+    "callbackUrl": "/auth/facebook/callback"
+  },
+  "server": {
+    "host": "http://localhost:7777"
+  },
+  "stripeKey": "sk_test_IV7VTVZnS8zeCA4eb76ApuUK",
+  "openExchangeRatesKey": "6c1b3e543d1140c7a3e2c29e24a5d4aa"
 }

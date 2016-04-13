@@ -9,7 +9,8 @@ require("./models/models")(wagner);
 var app = express(),
     port = process.argv[2] || process.env.PORT || 80;
 
-//wagner.invoke(require('./auth'), { app: app });
+
+wagner.invoke(require('./auth'), { app: app });
 
 app.use(morgan("dev"));
 app.use("/api", require("./routes/api")(wagner));

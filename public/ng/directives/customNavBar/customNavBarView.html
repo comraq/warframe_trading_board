@@ -1,5 +1,13 @@
 <nav class="navbar navbar-default container-fluid">
   <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed"
+      data-toggle="collapse" data-target="#navbar"
+      aria-expanded="false" aria-controls="navbar">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
     <a class="navbar-brand" ui-sref="buy">WarFrame Trading Board</a>
   </div>
 
@@ -11,13 +19,17 @@
 
     <ul class="nav navbar-nav navbar-right">
       <!-- Navigation when Signed Out -->
-      <li ng-if="!signedIn">
-        <a ui-sref="signIn">Sign In</a>
+      <li ng-if="!user.user">
+        <a href="/auth/facebook/">Sign In</a>
       </li>
 
       <!-- Navigation when Signed In -->
-      <li ng-if="signedIn">
-        <a ui-sref="signOut">Sign Out</a>
+      <li ng-if="user.user">
+        <div class="user-info">
+          Welcome, {{ user.user.name.first }} {{ user.user.name.last }}
+          <img ng-src="{{ user.user.profile.picture }}" />
+          <a ui-sref="signOut">Sign Out</a>
+        </div>
       </li>
     </ul>
   </div>

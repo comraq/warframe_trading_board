@@ -1,8 +1,18 @@
 var mongoose = require("mongoose");
 
 var userObject = {
+  name: {
+    first: {
+      type: String,
+      required: true
+    },
+    last: {
+      type: String,
+      required: true
+    }
+  },
   profile: {
-    username: {
+    email: {
       type: String,
       required: true,
       lowercase: true

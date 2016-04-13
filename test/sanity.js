@@ -3,10 +3,10 @@ var superagent = require("superagent"),
     expect = require("chai").expect;
 
 var host = "http://localhost",
-    port = 4444;
+    port = 7777;
 
 describe("sanity: ", function() {
-  describe("index.html", function() {
+  describe("./index.html", function() {
     it("should respond to GET", function(done) {
       superagent
         .get(host + ":" + port)

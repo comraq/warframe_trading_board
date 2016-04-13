@@ -1,28 +1,42 @@
-var bodyparser = require('body-parser'),
-    express = require('express');
+var bodyparser = require("body-parser"),
+    httpStatus = require("http-status"),
+    express = require("express");
 
 module.exports = function(wagner) {
   var api = express.Router();
 
   // CORS Support
   api.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+
     next();
   });
 
   api.use(bodyparser.json());
 
+  api.get("/me", function(req, res) {
+    if (!req.user) {
+      return res.
+        status(httpStatus.UNAUTHORIZED).
+        json({ error: "Not logged in" });
+    }
+
+    res.json({ user: req.user });
+  });
+
+  return api;
+};
 /*
-  api.put('/me/cart', wagner.invoke(function(User) {
+  api.put("/me/cart", wagner.invoke(function(User) {
     return function(req, res) {
       try {
         var cart = req.body.data.cart;
       } catch(e) {
         return res.
           status(status.BAD_REQUEST).
-          json({ error: 'No cart specified!' });
+          json({ error: "No cart specified!" });
       }
 
       req.user.data.cart = cart;
@@ -37,27 +51,17 @@ module.exports = function(wagner) {
     };
   }));
 
-  api.get('/me', function(req, res) {
-    if (!req.user) {
-      return res.
-        status(status.UNAUTHORIZED).
-        json({ error: 'Not logged in' });
-    }
 
-    res.json({ user: req.user });
-    //req.user.populate({ path: 'data.cart.product', model: 'Product' }, handleOne.bind(null, 'user', res));
-  });
-
-  api.post('/checkout', wagner.invoke(function(User, Stripe) {
+  api.post("/checkout", wagner.invoke(function(User, Stripe) {
     return function(req, res) {
       if (!req.user) {
         return res.
           status(status.UNAUTHORIZED).
-          json({ error: 'Not logged in' });
+          json({ error: "Not logged in" });
       }
 
       // Populate the products in the user's cart
-      req.user.populate({ path: 'data.cart.product', model: 'Product' }, function(error, user) {
+      req.user.populate({ path: "data.cart.product", model: "Product" }, function(error, user) {
 
         // Sum up the total price in USD
         var totalCostUSD = 0;
@@ -71,12 +75,12 @@ module.exports = function(wagner) {
           {
             // Stripe wants price in cents, so multiply by 100 and round up
             amount: Math.ceil(totalCostUSD * 100),
-            currency: 'usd',
+            currency: "usd",
             source: req.body.stripeToken,
-            description: 'Example charge'
+            description: "Example charge"
           },
           function(err, charge) {
-            if (err && err.type === 'StripeCardError') {
+            if (err && err.type === "StripeCardError") {
               return res.
                 status(status.BAD_REQUEST).
                 json({ error: err.toString() });
@@ -102,8 +106,6 @@ module.exports = function(wagner) {
   }));
 */
 
-  return api;
-};
 
 /*
 function handleOne(property, res, error, result) {
@@ -115,7 +117,7 @@ function handleOne(property, res, error, result) {
   if (!result) {
     return res.
       status(status.NOT_FOUND).
-      json({ error: 'Not found' });
+      json({ error: "Not found" });
   }
 
   var json = {};
