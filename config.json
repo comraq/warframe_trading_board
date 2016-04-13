@@ -12,6 +12,11 @@
     "url": "/auth/facebook",
     "callbackUrl": "/auth/facebook/callback"
   },
+  "steamAuth": {
+    "apiKey": "E5CCC9FDDE1DF22F80C740E217C541D5",
+    "url": "/auth/steam",
+    "callbackUrl": "/auth/steam/return"
+  },
   "server": {
     "host": "http://localhost:7777"
   },
