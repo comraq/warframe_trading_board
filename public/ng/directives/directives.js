@@ -2,7 +2,7 @@ exports.buyList = function() {
   return {
     restrict: "AE",
     controller: "buyListController",
-    templateUrl: "/ng/directives/buyList/buyListView.html",
+    templateUrl: "/ng/directives/buyList/buyListView.html"
   };
 };
 
@@ -10,7 +10,7 @@ exports.sellList = function() {
   return {
     restrict: "AE",
     controller: "sellListController",
-    templateUrl: "/ng/directives/sellList/sellListView.html",
+    templateUrl: "/ng/directives/sellList/sellListView.html"
   };
 };
 
@@ -19,5 +19,8 @@ exports.customNavBar = function() {
     restrict: "AE",
     controller: "customNavBarController",
     templateUrl: "/ng/directives/customNavBar/customNavBarView.html",
+    scope: {
+      user: "=user"
+    }
   };
 };

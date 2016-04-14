@@ -20,22 +20,34 @@ var app = angular.module("warframeTrade", [
 
 app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider
-    .otherwise("buy");
+    .otherwise("/buy");
 
   $stateProvider
-    .state("buy", {
+    .state("navbar", {
+      abstract: true,
+      template: "<custom-nav-bar user='userSession'></custom-nav-bar>",
+      resolve: {
+        userSession: function(userSessionService) {
+          return userSessionService.getUserSession();
+        }
+      },
+      controller: function($scope, userSession) {
+        $scope.userSession = userSession;
+      }
+    })
+    .state("navbar.buy", {
       url: "/buy",
       templateUrl: "/ng/templates/buy.html"
     })
-    .state("buyList", {
+    .state("navbar.buy.list", {
       url: "/list",
       template: "<buy-list></buy-list>"
     })
-    .state("sell", {
+    .state("navbar.sell", {
       url: "/sell",
       templateUrl: "/ng/templates/sell.html"
     })
-    .state("sellList", {
+    .state("navbar.sell.list", {
       url: "/list",
       template: "<sell-list></sell-list>"
     })

@@ -1,24 +1,23 @@
 var httpStatus = require("http-status");
 
-module.exports = function($http) {
-  var s = {};
-
-  s.loadUser = function() {
-
-    $http.get("/api/me")
+module.exports = function($http, $q) {
+  return {
+    getUserSession: function getUserSession() {
+      var session = $q.defer();
+      $http.get("/api/me")
          .success(function(res) {
-           s.user = res.user;
+           // API returns valid user data!
+           session.resolve(res.user);
          })
          .error(function(res, httpStatus) {
-           if (httpStatus === httpStatus.UNAUTHORIZED)
-             s.user = null;
+           // Still resolve promise, with user as null
+           session.resolve(null);
          });
+
+      // Reload user session info from database every hour
+      // setInterval(getUserSession, 60 * 60 * 1000);
+
+      return session.promise;
+    }  
   };
-
-  s.loadUser();
-
-  // Reload user session info from database every hour
-  setInterval(s.loadUser, 60 * 60 * 1000);
-
-  return s;
 };

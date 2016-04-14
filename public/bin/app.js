@@ -112,22 +112,34 @@ var app = angular.module("warframeTrade", [
 
 app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider
-    .otherwise("buy");
+    .otherwise("/buy");
 
   $stateProvider
-    .state("buy", {
+    .state("navbar", {
+      abstract: true,
+      template: "<custom-nav-bar user='userSession'></custom-nav-bar>",
+      resolve: {
+        userSession: function(userSessionService) {
+          return userSessionService.getUserSession();
+        }
+      },
+      controller: function($scope, userSession) {
+        $scope.userSession = userSession;
+      }
+    })
+    .state("navbar.buy", {
       url: "/buy",
       templateUrl: "/ng/templates/buy.html"
     })
-    .state("buyList", {
+    .state("navbar.buy.list", {
       url: "/list",
       template: "<buy-list></buy-list>"
     })
-    .state("sell", {
+    .state("navbar.sell", {
       url: "/sell",
       templateUrl: "/ng/templates/sell.html"
     })
-    .state("sellList", {
+    .state("navbar.sell.list", {
       url: "/list",
       template: "<sell-list></sell-list>"
     })
@@ -154,12 +166,11 @@ exports.customNavBarController =
   require("./customNavBar/customNavBarController.js");
 
 },{"./buyList/buyListController.js":3,"./customNavBar/customNavBarController.js":5,"./sellList/sellListController.js":7}],5:[function(require,module,exports){
-module.exports = function($scope, $state, $http, userSessionService) {
+module.exports = function($scope, $state, $http) {
   var debug = false;
 
   $scope.ctrl = this;
   this.scope = $scope;
-  this.scope.user = userSessionService;
 
   if (debug) {
     console.log("scope:")
@@ -176,8 +187,8 @@ module.exports = function($scope, $state, $http, userSessionService) {
              console.log("SignOut Successful!");
 
            // Session Cleared but not redirected due to 
-           this.scope.user.user = res.user;
-           $state.go("buy");
+           this.scope.user = res.user;
+           $state.go("navbar.buy");
          }.bind(this))
          .error(function(err) {
            if (debug)
@@ -191,7 +202,7 @@ exports.buyList = function() {
   return {
     restrict: "AE",
     controller: "buyListController",
-    templateUrl: "/ng/directives/buyList/buyListView.html",
+    templateUrl: "/ng/directives/buyList/buyListView.html"
   };
 };
 
@@ -199,7 +210,7 @@ exports.sellList = function() {
   return {
     restrict: "AE",
     controller: "sellListController",
-    templateUrl: "/ng/directives/sellList/sellListView.html",
+    templateUrl: "/ng/directives/sellList/sellListView.html"
   };
 };
 
@@ -208,6 +219,9 @@ exports.customNavBar = function() {
     restrict: "AE",
     controller: "customNavBarController",
     templateUrl: "/ng/directives/customNavBar/customNavBarView.html",
+    scope: {
+      user: "=user"
+    }
   };
 };
 
@@ -227,27 +241,26 @@ exports.userSessionService = require("./userSessionService");
 },{"./userSessionService":9}],9:[function(require,module,exports){
 var httpStatus = require("http-status");
 
-module.exports = function($http) {
-  var s = {};
-
-  s.loadUser = function() {
-
-    $http.get("/api/me")
+module.exports = function($http, $q) {
+  return {
+    getUserSession: function getUserSession() {
+      var session = $q.defer();
+      $http.get("/api/me")
          .success(function(res) {
-           s.user = res.user;
+           // API returns valid user data!
+           session.resolve(res.user);
          })
          .error(function(res, httpStatus) {
-           if (httpStatus === httpStatus.UNAUTHORIZED)
-             s.user = null;
+           // Still resolve promise, with user as null
+           session.resolve(null);
          });
+
+      // Reload user session info from database every hour
+      // setInterval(getUserSession, 60 * 60 * 1000);
+
+      return session.promise;
+    }  
   };
-
-  s.loadUser();
-
-  // Reload user session info from database every hour
-  setInterval(s.loadUser, 60 * 60 * 1000);
-
-  return s;
 };
 
 },{"http-status":1}]},{},[2]);

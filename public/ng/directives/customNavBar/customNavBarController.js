@@ -1,9 +1,8 @@
-module.exports = function($scope, $state, $http, userSessionService) {
+module.exports = function($scope, $state, $http) {
   var debug = false;
 
   $scope.ctrl = this;
   this.scope = $scope;
-  this.scope.user = userSessionService;
 
   if (debug) {
     console.log("scope:")
@@ -20,8 +19,8 @@ module.exports = function($scope, $state, $http, userSessionService) {
              console.log("SignOut Successful!");
 
            // Session Cleared but not redirected due to 
-           this.scope.user.user = res.user;
-           $state.go("buy");
+           this.scope.user = res.user;
+           $state.go("navbar.buy");
          }.bind(this))
          .error(function(err) {
            if (debug)
