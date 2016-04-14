@@ -2,7 +2,10 @@ var CategoryModel = require('./category'),
     mongoose = require('mongoose');
 
 var postObject = {
-  user: { type: String, required: true },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  },
   category: CategoryModel.schema,
   items: [{
     type: mongoose.Schema.Types.ObjectId,

@@ -6,7 +6,8 @@ module.exports = function(wagner) {
     strategy = new FacebookStrategy({
       clientID: Config.facebookAuth.clientId,
       clientSecret: Config.facebookAuth.clientSecret,
-      callbackURL: Config.server.host + Config.facebookAuth.callbackUrl,
+      callbackURL: Config.server.authority
+                   + Config.facebookAuth.callbackUrl,
       // Necessary for new version of Facebook graph API
       profileFields: ["id", "name"]
     },

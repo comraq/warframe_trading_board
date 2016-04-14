@@ -18,7 +18,9 @@
     "callbackUrl": "/auth/steam/return"
   },
   "server": {
-    "host": "http://localhost:7777"
+    "host": "http://localhost",
+    "port": "",
+    "authority": ""
   },
   "stripeKey": "sk_test_IV7VTVZnS8zeCA4eb76ApuUK",
   "openExchangeRatesKey": "6c1b3e543d1140c7a3e2c29e24a5d4aa"

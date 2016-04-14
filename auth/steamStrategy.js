@@ -4,8 +4,8 @@ module.exports = function(wagner) {
   var strategy;
   wagner.invoke(function(User, Config, app, passport) {
     strategy = new SteamStrategy({
-      returnURL: Config.server.host + Config.steamAuth.callbackUrl,
-      realm: Config.server.host,
+      returnURL: Config.server.authority + Config.steamAuth.callbackUrl,
+      realm: Config.server.authority,
       apiKey: Config.steamAuth.apiKey
     },
     function(identifier, profile, done) {

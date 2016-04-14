@@ -14,6 +14,8 @@ for (var serviceName in services)
   components.factory(serviceName, services[serviceName]);
 
 var app = angular.module("warframeTrade", [
+                                            "ngAnimate",
+                                            "ngTouch",
                                             "app_components",
                                             "ui.router"
                                           ]);
@@ -41,7 +43,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
     })
     .state("navbar.buy.list", {
       url: "/list",
-      template: "<buy-list></buy-list>"
+      template: "<buy-list user='userSession'></buy-list>",
+      controller: function($scope, userSession) {
+        $scope.userSession = userSession;
+      }
     })
     .state("navbar.sell", {
       url: "/sell",
@@ -49,6 +54,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
     })
     .state("navbar.sell.list", {
       url: "/list",
-      template: "<sell-list></sell-list>"
+      template: "<sell-list user='userSession'></sell-list>",
+      controller: function($scope, userSession) {
+        $scope.userSession = userSession;
+      }
     })
 });

@@ -2,7 +2,10 @@ exports.buyList = function() {
   return {
     restrict: "AE",
     controller: "buyListController",
-    templateUrl: "/ng/directives/buyList/buyListView.html"
+    templateUrl: "/ng/directives/buyList/buyListView.html",
+    scope: {
+      user: "=user"
+    }
   };
 };
 
@@ -10,7 +13,10 @@ exports.sellList = function() {
   return {
     restrict: "AE",
     controller: "sellListController",
-    templateUrl: "/ng/directives/sellList/sellListView.html"
+    templateUrl: "/ng/directives/sellList/sellListView.html",
+    scope: {
+      user: "=user"
+    }
   };
 };
 
