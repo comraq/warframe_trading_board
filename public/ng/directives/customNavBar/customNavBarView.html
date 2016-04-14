@@ -29,7 +29,7 @@
       <!-- Navigation when Signed In -->
       <li ng-if="user">
         <div class="user-info">
-          Welcome, {{ user.name.first }} {{ user.name.last }}
+          Welcome, {{ user.profile.name }}
           <img ng-src="{{ user.profile.picture }}" />
           <a href="" ng-click="ctrl.signOut()">Sign Out</a>
         </div>

@@ -1,34 +1,19 @@
 var mongoose = require("mongoose");
 
 var userObject = {
-  name: {
-    first: {
-      type: String,
-      required: true
-    },
-    last: {
-      type: String,
-      required: true
-    }
-  },
   profile: {
-    email: {
+    name: {
       type: String,
-      required: true,
-      lowercase: true
+      required: true
     },
     picture: {
       type: String,
       required: true,
-      match: /^http:\/\//i
+      match: /^https?:\/\//i
     }
   },
   data: {
-    oauth: { type: String, required: true },
-    posts: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Post"
-    }]
+    oauth: { type: String, required: true }
   }
 };
 

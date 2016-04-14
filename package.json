@@ -8,6 +8,9 @@
     "watchApp": "./node_modules/gulp/bin/gulp.js watch_app",
     "test": "./node_modules/gulp/bin/gulp.js"
   },
+  "config": {
+    "debug": false
+  },
   "author": "adam",
   "license": "MIT",
   "dependencies": {
