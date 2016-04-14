@@ -1,0 +1,11 @@
+.user-profile img {
+  max-height: 50px;
+}
+
+.nav li .signin-img {
+  padding: 0;
+  padding-left: 1%;
+
+  height: 45px;
+  width: 100px;
+}
