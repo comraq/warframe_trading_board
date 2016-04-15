@@ -35,7 +35,7 @@ gulp.task("concat_css", function() {
 
 gulp.task("watch_app", function() {
   gulp.watch([ "./public/**/*.js", "!./public/bin/app.min.js" ],
-             [ "browserify_js"]);
+             [ "browserify_js" ]);
   gulp.watch([ "./public/**/*.css", "!./public/bin/styles.min.css" ],
              [ "concat_css" ]);
 });

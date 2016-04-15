@@ -9,7 +9,7 @@ module.exports = function(wagner) {
       callbackURL: Config.server.authority
                    + Config.facebookAuth.callbackUrl,
       // Necessary for new version of Facebook graph API
-      profileFields: ["id", "name"]
+      profileFields: [ "id", "name" ]
     },
     function(accessToken, refreshToken, profile, done) {
       var name;
