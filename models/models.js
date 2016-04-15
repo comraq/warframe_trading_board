@@ -1,8 +1,6 @@
 var mongoose = require("mongoose"),
     ItemCategoryModel = require("./itemCategory"),
     ItemModel = require("./item"),
-    PostCategoryModel = require("./postCategory"),
-    PostModel = require("./post_alternate"),
     UserModel = require("./user");
 
 module.exports = function(wagner) {
@@ -37,8 +35,6 @@ module.exports = function(wagner) {
   var models = {
     ItemCategory: ItemCategoryModel,
     Item: ItemModel,
-    PostCategory: PostCategoryModel,
-    Post: PostModel,
     User: UserModel
   };
 

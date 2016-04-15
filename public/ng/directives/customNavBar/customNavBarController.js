@@ -28,9 +28,7 @@ module.exports = [ "$scope",
            if (debug)
              console.log("LogOut Successful!");
 
-           // Session Cleared but not redirected due to 
            this.scope.user = res.user;
-           $state.go("root.home");
          }.bind(this))
          .error(function(err) {
            if (debug)

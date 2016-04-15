@@ -2,8 +2,16 @@ var ItemCategoryModel = require('./itemCategory'),
     mongoose = require('mongoose');
 
 var itemObject = {
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
   name: { type: String, required: true },
-  description: { type: String },
+  details: {
+    type: String
+    // TODO: Expand here?
+  },
   price: { type: Number, required: true },
   transaction: {
     type: String,
@@ -30,7 +38,11 @@ var transactionEnum = {
   message: "`transaction` Attribute Must Be Either 'Deal' or 'Auction'"
 };
 
-var schema = new mongoose.Schema(itemObject);
+var options = {
+  timestamps: true
+};
+
+var schema = new mongoose.Schema(itemObject, options);
 schema.pre("save", function(next) {
   if (this.transaction == "Auction" && !this.bidPrice)
     return next(new Error("Bid Price Not Set for Auction Item!"));
