@@ -1,2 +1,2 @@
-.user-profile img{max-height:50px}.nav li .signin-img{padding:0 0 0 1%;height:45px;width:100px}
-#home-button-group{width:100%}
+.user-profile img{max-height:50px}.nav li .signin-img{padding:0}.nav li .signin-img img{height:50px}
+#home-scroll-container{height:70vh;border:.5px solid #ddd}#home-scroll-content{padding:2%}

@@ -23,11 +23,15 @@ module.exports = [ "$scope",
 
            // Session Cleared but not redirected due to 
            this.scope.user = res.user;
-           $state.go("navbar.buy");
+           $state.go("root.home");
          }.bind(this))
          .error(function(err) {
            if (debug)
              console.log("SignOut Failed!");
          });
   };
+
+  this.notHomeState = function notHomeState() {
+    return $state.$current.name != "root.home";
+  }
 }];

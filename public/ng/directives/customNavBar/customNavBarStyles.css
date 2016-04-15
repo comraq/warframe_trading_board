@@ -4,8 +4,8 @@
 
 .nav li .signin-img {
   padding: 0;
-  padding-left: 1%;
+}
 
-  height: 45px;
-  width: 100px;
+.nav li .signin-img img {
+  height: 50px;
 }

@@ -19,6 +19,7 @@ var app = angular.module("warframeTrade", [
                                             "ui.bootstrap",
                                             "ui.router",
                                             "ncy-angular-breadcrumb",
+                                            "ngScrollable",
                                             "app_components"
                                           ]);
 
@@ -65,24 +66,6 @@ app.config([ "$stateProvider",
       }],
       ncyBreadcrumb: {
         label: "Mods"
-      }
-    })
-    .state("root.sell", {
-      url: "/sell",
-      templateUrl: "/ng/templates/sell.html",
-      ncyBreadcrumb: {
-        label: "Sell"
-      }
-    })
-    .state("root.sell.list", {
-      url: "/list",
-      template: "<sell-list user='userSession'></sell-list>",
-      controller: [ "$scope", "userSession",
-                    function($scope, userSession) {
-        $scope.userSession = userSession;
-      }],
-      ncyBreadcrumb: {
-        label: "SellList"
       }
     })
 }]);
