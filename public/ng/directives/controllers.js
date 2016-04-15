@@ -1,8 +1,8 @@
 exports.homeController =
   require("./home/homeController.js");
 
-exports.buyListController =
-  require("./buyList/buyListController.js");
+exports.modsController =
+  require("./mods/modsController.js");
 
 exports.sellListController =
   require("./sellList/sellListController.js");

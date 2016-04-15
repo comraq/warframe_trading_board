@@ -18,6 +18,7 @@ var app = angular.module("warframeTrade", [
                                             "ngTouch",
                                             "ui.bootstrap",
                                             "ui.router",
+                                            "ncy-angular-breadcrumb",
                                             "app_components"
                                           ]);
 
@@ -29,7 +30,6 @@ app.config([ "$stateProvider",
 
   $stateProvider
     .state("root", {
-      abstract: true,
       template: "<custom-nav-bar user='userSession'></custom-nav-bar>",
       resolve: {
         userSession: [ "userSessionService",
@@ -40,7 +40,10 @@ app.config([ "$stateProvider",
       controller: [ "$scope", "userSession",
                     function($scope, userSession) {
         $scope.userSession = userSession;
-      }]
+      }],
+      ncyBreadcrumb: {
+        label: "Home"
+      }
     })
     .state("root.home", {
       url: "/home",
@@ -48,19 +51,28 @@ app.config([ "$stateProvider",
       controller: [ "$scope", "userSession",
                     function($scope, userSession) {
         $scope.userSession = userSession;
-      }]
+      }],
+      ncyBreadcrumb: {
+        skip: true
+      }
     })
-    .state("root.buylist", {
-      url: "/list",
-      template: "<buy-list user='userSession'></buy-list>",
+    .state("root.mods", {
+      url: "/mods",
+      template: "<mods user='userSession'></mods>",
       controller: [ "$scope", "userSession",
                     function($scope, userSession) {
         $scope.userSession = userSession;
-      }]
+      }],
+      ncyBreadcrumb: {
+        label: "Mods"
+      }
     })
     .state("root.sell", {
       url: "/sell",
-      templateUrl: "/ng/templates/sell.html"
+      templateUrl: "/ng/templates/sell.html",
+      ncyBreadcrumb: {
+        label: "Sell"
+      }
     })
     .state("root.sell.list", {
       url: "/list",
@@ -68,6 +80,9 @@ app.config([ "$stateProvider",
       controller: [ "$scope", "userSession",
                     function($scope, userSession) {
         $scope.userSession = userSession;
-      }]
+      }],
+      ncyBreadcrumb: {
+        label: "SellList"
+      }
     })
 }]);

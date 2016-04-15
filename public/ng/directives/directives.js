@@ -9,11 +9,11 @@ exports.home = function() {
   };
 };
 
-exports.buyList = function() {
+exports.mods = function() {
   return {
     restrict: "AE",
-    controller: "buyListController",
-    templateUrl: "/ng/directives/buyList/buyListView.html",
+    controller: "modsController",
+    templateUrl: "/ng/directives/mods/modsView.html",
     scope: {
       user: "=user"
     }

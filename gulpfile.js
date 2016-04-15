@@ -9,7 +9,7 @@ var gulp = require("gulp"),
     buffer = require("vinyl-buffer"),
     source = require("vinyl-source-stream");
 
-var ALL_JS_SRC_FILES = ["./**/*.js", "!./gulpfile.js", "!./test/*.js"],
+var ALL_JS_SRC_FILES = [ "./**/*.js", "!./gulpfile.js", "!./test/*.js" ],
     testSuite = "sanity";
 
 gulp.task("browserify_js", function() {
@@ -22,20 +22,22 @@ gulp.task("browserify_js", function() {
     .pipe(source("bundle.js"))
     .pipe(buffer())
     .pipe(uglify())
-    .pipe(rename("app.js"))
+    .pipe(rename("app.min.js"))
     .pipe(gulp.dest("./public/bin"));
 });
 
 gulp.task("concat_css", function() {
   return gulp.src("./public/ng/**/*.css")
     .pipe(cleanCSS())
-    .pipe(concat("styles.css"))
+    .pipe(concat("styles.min.css"))
     .pipe(gulp.dest("./public/bin"));
 });
 
 gulp.task("watch_app", function() {
-  gulp.watch(["./public/**/*.js", "!./public/bin/app.js"], ["browserify_js"]);
-  gulp.watch(["./public/**/*.css", "!./public/bin/styles.css"], ["concat_css"]);
+  gulp.watch([ "./public/**/*.js", "!./public/bin/app.min.js" ],
+             [ "browserify_js"]);
+  gulp.watch([ "./public/**/*.css", "!./public/bin/styles.min.css" ],
+             [ "concat_css" ]);
 });
 
 gulp.task("tests", function() {
@@ -55,12 +57,10 @@ gulp.task("tests", function() {
 });
 
 gulp.task("default", function() {
-  console.log(JSON.stringify(gulp, null, 2));
-
-  return gulp.watch(ALL_JS_SRC_FILES, ["tests"]);
+  return gulp.watch(ALL_JS_SRC_FILES, [ "tests" ]);
 });
 
 gulp.task("sanity", function() {
   testSuite = "sanity";
-  return gulp.watch(ALL_JS_SRC_FILES, ["tests"]);
+  return gulp.watch(ALL_JS_SRC_FILES, [ "tests" ]);
 });
