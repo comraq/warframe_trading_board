@@ -30,3 +30,11 @@ exports.mods = function() {
     }
   };
 };
+
+exports.logIn = function() {
+  return {
+    restrict: "AE",
+    controller: "logInController",
+    templateUrl: "/ng/directives/logIn/logInView.html"
+  };
+};

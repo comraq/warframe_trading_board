@@ -21,24 +21,17 @@
     </form>
 
     <ul class="nav navbar-nav navbar-right">
-      <!-- Navigation when Signed Out -->
+      <!-- Navigation when Logged Out -->
       <li ng-if="!user">
-        <a href="/auth/steam/" class="warframe-signin-img">
-          <img src="/assets/img/steam_signin.png" />
-        </a>
-      </li>
-      <li ng-if="!user">
-        <a href="/auth/facebook/" class="warframe-signin-img">
-          <img src="/assets/img/facebook_signin.png" />
-        </a>
+        <a href="" ng-click="ctrl.logIn()">Log In</a>
       </li>
 
-      <!-- Navigation when Signed In -->
+      <!-- Navigation when Logged In -->
       <li ng-if="user">
         <div class="warframe-user-profile">
           Welcome, {{ user.profile.name }}
           <img ng-src="{{ user.profile.picture }}" />
-          <a href="" ng-click="ctrl.signOut()">Sign Out</a>
+          <a href="" ng-click="ctrl.logOut()">Log Out</a>
         </div>
       </li>
     </ul>

@@ -11,7 +11,7 @@ for (var directiveName in directives)
   components.directive(directiveName, directives[directiveName]);
       
 for (var serviceName in services)
-  components.factory(serviceName, services[serviceName]);
+  components.service(serviceName, services[serviceName]);
 
 var app = angular.module("warframeTrade", [
                                             "ngAnimate",

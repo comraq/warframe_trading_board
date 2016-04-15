@@ -1,7 +1,8 @@
 module.exports = [ "$scope",
                    "$state",
                    "$http",
-                    function($scope, $state, $http) {
+                   "$uibModal",
+                    function($scope, $state, $http, $uibModal) {
   var debug = false;
 
   $scope.ctrl = this;
@@ -12,14 +13,20 @@ module.exports = [ "$scope",
     console.log(this.scope);
   }
 
-  this.signOut = function signOut() {
+  this.logIn = function logIn() {
+    var modalInstance = $uibModal.open({
+      template: "<log-in></log-in>"
+    });
+  };
+
+  this.logOut = function logOut() {
     if (!this.scope.user)
       return;
 
-    $http.get("/api/signOut")
+    $http.get("/api/logOut")
          .success(function(res) {
            if (debug)
-             console.log("SignOut Successful!");
+             console.log("LogOut Successful!");
 
            // Session Cleared but not redirected due to 
            this.scope.user = res.user;
@@ -27,7 +34,7 @@ module.exports = [ "$scope",
          }.bind(this))
          .error(function(err) {
            if (debug)
-             console.log("SignOut Failed!");
+             console.log("LogOut Failed!");
          });
   };
 

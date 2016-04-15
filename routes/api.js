@@ -25,7 +25,7 @@ module.exports = function(wagner) {
     res.json({ user: req.user });
   });
 
-  api.get("/signOut", function(req, res) {
+  api.get("/logOut", function(req, res) {
     req.logout();
     res.json({ user: null });
 

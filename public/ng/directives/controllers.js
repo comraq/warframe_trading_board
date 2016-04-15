@@ -6,3 +6,6 @@ exports.homeController =
 
 exports.modsController =
   require("./mods/modsController.js");
+
+exports.logInController =
+  require("./logIn/logInController.js");

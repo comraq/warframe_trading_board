@@ -8,8 +8,12 @@ var postObject = {
     ref: "User"
   },
   category: PostCategoryModel.schema,
-  items: [ItemModel.schema]
+  items: [ ItemModel.schema ]
 };
 
-var schema = new mongoose.Schema(postObject);
+var options = {
+  timestamps: true
+};
+
+var schema = new mongoose.Schema(postObject, options);
 module.exports = mongoose.model("Post", schema, "posts");

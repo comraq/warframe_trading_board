@@ -1,3 +1,4 @@
 .warframe-scroll-container{height:70vh;border:.5px solid #ddd}.warframe-scroll-content{padding:2%}
 .warframe-user-profile img{max-height:50px}.nav li .warframe-signin-img{padding:0}.nav li .warframe-signin-img img{height:50px}
 
+.warframe-login-container{padding:5%}.warframe-login-methods-container,.warframe-login-title{text-align:center}.warframe-login-button{margin:1%;position:relative;display:inline-block}.warframe-login-img{height:8vh;width:8vw}
