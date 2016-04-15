@@ -1,3 +1,9 @@
+/*
+ * TODO: This is currently NOT IN USE!
+ *       Any updates should be made to models/post_alternate.js instead!
+ *
+ */
+
 var CategoryModel = require('./category'),
     mongoose = require('mongoose');
 

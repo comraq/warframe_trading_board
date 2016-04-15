@@ -1,4 +1,4 @@
-var CategoryModel = require("./category"),
+var PostCategoryModel = require("./postCategory"),
     ItemModel = require("./item"),
     mongoose = require("mongoose");
 
@@ -7,7 +7,7 @@ var postObject = {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   },
-  category: CategoryModel.schema,
+  category: PostCategoryModel.schema,
   items: [ItemModel.schema]
 };
 

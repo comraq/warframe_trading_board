@@ -1,11 +1,11 @@
-.user-profile img {
+.warframe-user-profile img {
   max-height: 50px;
 }
 
-.nav li .signin-img {
+.nav li .warframe-signin-img {
   padding: 0;
 }
 
-.nav li .signin-img img {
+.nav li .warframe-signin-img img {
   height: 50px;
 }

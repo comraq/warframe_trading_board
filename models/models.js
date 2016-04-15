@@ -1,5 +1,7 @@
 var mongoose = require("mongoose"),
-    CategoryModel = require("./category"),
+    ItemCategoryModel = require("./itemCategory"),
+    ItemModel = require("./item"),
+    PostCategoryModel = require("./postCategory"),
     PostModel = require("./post_alternate"),
     UserModel = require("./user");
 
@@ -33,7 +35,9 @@ module.exports = function(wagner) {
  *       Then, loop through each one and add them to wagner as a service
  */
   var models = {
-    Category: CategoryModel,
+    ItemCategory: ItemCategoryModel,
+    Item: ItemModel,
+    PostCategory: PostCategoryModel,
     Post: PostModel,
     User: UserModel
   };

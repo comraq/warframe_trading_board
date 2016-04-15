@@ -1,12 +1,12 @@
 <!-- ng/directives/home/homeView.html -->
 <uib-tabset active="activeJustified" justified="true">
   <uib-tab index="0" heading="Today">
-    <div id="home-scroll-container"
+    <div class="warframe-scroll-container"
        ng-scrollable="{
                         scrollX: 'none',
                         scrollY: 'right'
                       }">
-      <div id="home-scroll-content">
+      <div class="warframe-scroll-content">
         <ul>
           <li ng-repeat="item in tempList">{{ item }}</li>
         </ul>
