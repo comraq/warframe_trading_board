@@ -7,5 +7,5 @@ npm run watchApp - automatically browserify .js files for clients browsers
 npm test [testSuite] - automically watches for changes in .js files and reruns the sanity testSuite (if no [testSuite] is specified)
 
 
-References:
+References:    
 http://stackoverflow.com/questions/29178305/injecting-resolves-into-directive-controllers

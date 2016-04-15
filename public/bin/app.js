@@ -108,16 +108,17 @@ for (var serviceName in services)
 var app = angular.module("warframeTrade", [
                                             "ngAnimate",
                                             "ngTouch",
-                                            "app_components",
-                                            "ui.router"
+                                            "ui.bootstrap",
+                                            "ui.router",
+                                            "app_components"
                                           ]);
 
 app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider
-    .otherwise("/buy");
+    .otherwise("/home");
 
   $stateProvider
-    .state("navbar", {
+    .state("root", {
       abstract: true,
       template: "<custom-nav-bar user='userSession'></custom-nav-bar>",
       resolve: {
@@ -129,22 +130,25 @@ app.config(function($stateProvider, $urlRouterProvider) {
         $scope.userSession = userSession;
       }
     })
-    .state("navbar.buy", {
-      url: "/buy",
-      templateUrl: "/ng/templates/buy.html"
+    .state("root.home", {
+      url: "/home",
+      template: "<home user='userSession'></home>",
+      controller: function($scope, userSession) {
+        $scope.userSession = userSession;
+      }
     })
-    .state("navbar.buy.list", {
+    .state("root.buylist", {
       url: "/list",
       template: "<buy-list user='userSession'></buy-list>",
       controller: function($scope, userSession) {
         $scope.userSession = userSession;
       }
     })
-    .state("navbar.sell", {
+    .state("root.sell", {
       url: "/sell",
       templateUrl: "/ng/templates/sell.html"
     })
-    .state("navbar.sell.list", {
+    .state("root.sell.list", {
       url: "/list",
       template: "<sell-list user='userSession'></sell-list>",
       controller: function($scope, userSession) {
@@ -153,7 +157,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     })
 });
 
-},{"./directives/controllers":4,"./directives/directives":6,"./services/services":8}],3:[function(require,module,exports){
+},{"./directives/controllers":4,"./directives/directives":6,"./services/services":9}],3:[function(require,module,exports){
 module.exports = function($scope) {
   this.scope = $scope;
 
@@ -164,6 +168,9 @@ module.exports = function($scope) {
 };
 
 },{}],4:[function(require,module,exports){
+exports.homeController =
+  require("./home/homeController.js");
+
 exports.buyListController =
   require("./buyList/buyListController.js");
 
@@ -173,7 +180,7 @@ exports.sellListController =
 exports.customNavBarController =
   require("./customNavBar/customNavBarController.js");
 
-},{"./buyList/buyListController.js":3,"./customNavBar/customNavBarController.js":5,"./sellList/sellListController.js":7}],5:[function(require,module,exports){
+},{"./buyList/buyListController.js":3,"./customNavBar/customNavBarController.js":5,"./home/homeController.js":7,"./sellList/sellListController.js":8}],5:[function(require,module,exports){
 module.exports = function($scope, $state, $http) {
   var debug = false;
 
@@ -206,6 +213,17 @@ module.exports = function($scope, $state, $http) {
 };
 
 },{}],6:[function(require,module,exports){
+exports.home = function() {
+  return {
+    restrict: "AE",
+    controller: "homeController",
+    templateUrl: "/ng/directives/home/homeView.html",
+    scope: {
+      user: "=user"
+    }
+  };
+};
+
 exports.buyList = function() {
   return {
     restrict: "AE",
@@ -243,16 +261,23 @@ exports.customNavBar = function() {
 module.exports = function($scope) {
   this.scope = $scope;
 
+  this.scope.radioModel = "Today";
+};
+
+},{}],8:[function(require,module,exports){
+module.exports = function($scope) {
+  this.scope = $scope;
+
   this.scope.posts = [
                        "Sell Post 1",
                        "Sell Post 2"
                      ];
 };
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 exports.userSessionService = require("./userSessionService");
 
-},{"./userSessionService":9}],9:[function(require,module,exports){
+},{"./userSessionService":10}],10:[function(require,module,exports){
 var httpStatus = require("http-status");
 
 module.exports = function($http, $q) {

@@ -3,12 +3,16 @@ var gulp = require("gulp"),
     gutil = require("gulp-util"),
     rename = require("gulp-rename"),
     browserify = require("browserify"),
+    uglify = require("gulp-uglify"),
+    cleanCSS = require("gulp-clean-css"),
+    concat = require("gulp-concat"),
+    buffer = require("vinyl-buffer"),
     source = require("vinyl-source-stream");
 
 var ALL_JS_SRC_FILES = ["./**/*.js", "!./gulpfile.js", "!./test/*.js"],
     testSuite = "sanity";
 
-gulp.task("browserify_app", function() {
+gulp.task("browserify_js", function() {
   return browserify("./public/ng/app.js")
     .bundle()
     .on("error", function(err) {
@@ -16,12 +20,22 @@ gulp.task("browserify_app", function() {
       this.emit("end");
     })
     .pipe(source("bundle.js"))
+//    .pipe(buffer())
+//    .pipe(uglify())
     .pipe(rename("app.js"))
     .pipe(gulp.dest("./public/bin"));
 });
 
+gulp.task("concat_css", function() {
+  return gulp.src("./public/ng/**/*.css")
+    .pipe(cleanCSS())
+    .pipe(concat("styles.css"))
+    .pipe(gulp.dest("./public/bin"));
+});
+
 gulp.task("watch_app", function() {
-  return gulp.watch(["./public/**/*.js"], ["browserify_app"]);
+  gulp.watch(["./public/**/*.js", "!./public/bin/app.js"], ["browserify_js"]);
+  gulp.watch(["./public/**/*.css", "!./public/bin/styles.css"], ["concat_css"]);
 });
 
 gulp.task("tests", function() {

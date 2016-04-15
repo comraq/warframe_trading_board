@@ -1,0 +1,26 @@
+<!-- ng/directives/home/home.html -->
+<!--
+<div class="btn-group" id="home-button-group">
+  <label class="btn btn-default" ng-model="radioModel"
+    uib-btn-radio="'Today'">Today</label>
+  <label class="btn btn-info" ng-model="radioModel"
+    ui-sref="root.buylist" uib-btn-radio="'Mods'">Mods</label>
+  <label class="btn btn-primary" ng-model="radioModel"
+    uib-btn-radio="'Sortie Weapons'">Sortie Weapons</label>
+  <label class="btn btn-success" ng-model="radioModel"
+    uib-btn-radio="'Void Parts'">Void Parts</label>
+  <label class="btn btn-warning" ng-model="radioModel"
+    uib-btn-radio="'Keys'">Keys</label>
+  <label class="btn btn-danger" ng-model="radioModel"
+    uib-btn-radio="'Arcanes'">Arcanes</label>
+</div>
+-->
+<uib-tabset active="activeJustified" justified="true">
+  <uib-tab index="0" heading="Today">Today Content</uib-tab>
+  <uib-tab index="1" heading="Mods" ui-sref="root.buylist"></uib-tab>
+  <uib-tab index="2" heading="Sortie Weapons"></uib-tab>
+  <uib-tab index="3" heading="Void Parts"></uib-tab>
+  <uib-tab index="4" heading="Keys"></uib-tab>
+  <uib-tab index="5" heading="Arcanes"></uib-tab>
+</uib-tabset>
+<div ui-view></div>

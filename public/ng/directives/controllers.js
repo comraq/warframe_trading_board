@@ -1,3 +1,6 @@
+exports.homeController =
+  require("./home/homeController.js");
+
 exports.buyListController =
   require("./buyList/buyListController.js");
 

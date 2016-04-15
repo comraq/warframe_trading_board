@@ -1,3 +1,14 @@
+exports.home = function() {
+  return {
+    restrict: "AE",
+    controller: "homeController",
+    templateUrl: "/ng/directives/home/homeView.html",
+    scope: {
+      user: "=user"
+    }
+  };
+};
+
 exports.buyList = function() {
   return {
     restrict: "AE",
