@@ -21,7 +21,9 @@ var app = angular.module("warframeTrade", [
                                             "app_components"
                                           ]);
 
-app.config(function($stateProvider, $urlRouterProvider) {
+app.config([ "$stateProvider",
+             "$urlRouterProvider",
+             function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider
     .otherwise("/home");
 
@@ -30,27 +32,31 @@ app.config(function($stateProvider, $urlRouterProvider) {
       abstract: true,
       template: "<custom-nav-bar user='userSession'></custom-nav-bar>",
       resolve: {
-        userSession: function(userSessionService) {
+        userSession: [ "userSessionService",
+                       function(userSessionService) {
           return userSessionService.getUserSession();
-        }
+        }]
       },
-      controller: function($scope, userSession) {
+      controller: [ "$scope", "userSession",
+                    function($scope, userSession) {
         $scope.userSession = userSession;
-      }
+      }]
     })
     .state("root.home", {
       url: "/home",
       template: "<home user='userSession'></home>",
-      controller: function($scope, userSession) {
+      controller: [ "$scope", "userSession",
+                    function($scope, userSession) {
         $scope.userSession = userSession;
-      }
+      }]
     })
     .state("root.buylist", {
       url: "/list",
       template: "<buy-list user='userSession'></buy-list>",
-      controller: function($scope, userSession) {
+      controller: [ "$scope", "userSession",
+                    function($scope, userSession) {
         $scope.userSession = userSession;
-      }
+      }]
     })
     .state("root.sell", {
       url: "/sell",
@@ -59,8 +65,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
     .state("root.sell.list", {
       url: "/list",
       template: "<sell-list user='userSession'></sell-list>",
-      controller: function($scope, userSession) {
+      controller: [ "$scope", "userSession",
+                    function($scope, userSession) {
         $scope.userSession = userSession;
-      }
+      }]
     })
-});
+}]);

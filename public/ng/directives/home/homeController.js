@@ -1,5 +1,3 @@
-module.exports = function($scope) {
+module.exports = [ "$scope", function($scope) {
   this.scope = $scope;
-
-  this.scope.radioModel = "Today";
-};
+}];

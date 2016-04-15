@@ -1,4 +1,7 @@
-module.exports = function($scope, $state, $http) {
+module.exports = [ "$scope",
+                   "$state",
+                   "$http",
+                    function($scope, $state, $http) {
   var debug = false;
 
   $scope.ctrl = this;
@@ -27,4 +30,4 @@ module.exports = function($scope, $state, $http) {
              console.log("SignOut Failed!");
          });
   };
-};
+}];

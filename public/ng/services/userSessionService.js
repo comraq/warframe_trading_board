@@ -1,6 +1,6 @@
 var httpStatus = require("http-status");
 
-module.exports = function($http, $q) {
+module.exports = [ "$http", "$q", function($http, $q) {
   return {
     getUserSession: function getUserSession() {
       var session = $q.defer();
@@ -20,4 +20,4 @@ module.exports = function($http, $q) {
       return session.promise;
     }  
   };
-};
+}];
