@@ -4,11 +4,11 @@ module.exports = [ "$http", "$q", function($http, $q) {
   this.getUserSession = function getUserSession() {
     var session = $q.defer();
     $http.get("/api/me")
-       .success(function(res) {
+       .then(function successCallback(res) {
          // API returns valid user data!
-         session.resolve(res.user);
-       })
-       .error(function(res, httpStatus) {
+         session.resolve(res.data.user);
+
+       }, function errorCallback(err) {
          // Still resolve promise, with user as null
          session.resolve(null);
        });

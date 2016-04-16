@@ -28,11 +28,22 @@
 
       <!-- Navigation when Logged In -->
       <li ng-if="user">
-        <div class="warframe-user-profile">
+        <div class="warframe-custom-nav-bar-user-profile">
           Welcome, {{ user.profile.name }}
           <img ng-src="{{ user.profile.picture }}" />
-          <a href="" ng-click="ctrl.logOut()">Log Out</a>
         </div>
+      </li>
+      <li ng-if="user">
+        <a href="" ng-click="ctrl.newPost()"
+          class="warframe-custom-nav-bar-new-post-container">
+          <div class="btn btn-success">New Post!</div>
+        </a>
+      </li>
+      <li ng-if="user">
+        <a href="">Account</a>
+      </li>
+      <li ng-if="user">
+        <a href="" ng-click="ctrl.logOut()">Log Out</a>
       </li>
     </ul>
   </div>

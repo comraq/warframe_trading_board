@@ -1,0 +1,17 @@
+.warframe-new-post-container {
+  padding: 5%;
+
+  text-align: center;
+}
+
+.warframe-new-post-container fieldset {
+  margin: 1%;
+
+  height: 55vh;
+
+  border: 0.5px solid #ddd;
+}
+
+.warframe-new-post-content {
+  padding: 0 5% 5% 5%;
+}

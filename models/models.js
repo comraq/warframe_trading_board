@@ -40,9 +40,14 @@ module.exports = function(wagner) {
 
   // DRY, register factories/servies in a loop
   for (var modelName in models) {
-    wagner.factory(modelName, function() {
-      return models[modelName];
-    });
+    // Wagner Factory calls the functions asynchronously,
+    // must use IIFE and closures to retain reference to the correct
+    // modelName through each iteration of the loop
+    wagner.factory(modelName, (function(name) {
+      return function() {
+        return models[name];
+      };
+    })(modelName));
   };
 
   return models;

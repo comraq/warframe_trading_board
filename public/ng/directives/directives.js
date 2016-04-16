@@ -37,4 +37,16 @@ exports.logIn = function() {
     controller: "logInController",
     templateUrl: "/ng/directives/logIn/logInView.html"
   };
+}
+
+exports.newPost = function() {
+  return {
+    restrict: "AE",
+    controller: "newPostController",
+    templateUrl: "/ng/directives/newPost/newPostView.html",
+    scope: {
+      newItem: "=item",
+      modal: "=modal"
+    }
+  };
 };

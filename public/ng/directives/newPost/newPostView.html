@@ -1,0 +1,78 @@
+<div class="warframe-new-post-container">
+  <h1>New Item for Sale!</h1>
+
+  <form role="form" name="newItemForm">
+    <fieldset ng-scrollable="{
+                               scrollX: 'none',
+                               scrollY: 'right'
+                             }">
+      <div class="warframe-new-post-content">
+        <div class="form-group">
+          <label for="new-item-name">Name</label>
+          <input type="text" class="form-control" name="name"
+            id="new-item-name" ng-model="newItem.name" required>
+        </div>
+        <div class="form-group">
+          <label for="new-item-desc">Description</label>
+          <input type="text" class="form-control" id="new-item-desc"
+            ng-model="newItem.description" name="desc"
+            placeholder="TODO: To Be Expanded Upon Later...">
+        </div>
+
+        <div class="row">
+          <div class="form-group col-sm-6">
+            <label for="new-item-category">Category</label>
+            <select class="form-control" ng-model="newItem.category['_id']"
+              id="new-item-category" name="category"
+              ng-options="cat as cat for cat in categories"></select>
+          </div>
+          <div class="form-group col-sm-6">
+            <label for="new-item-transaction">Transaction</label>
+            <select class="form-control" ng-model="newItem.transaction"
+              id="new-item-transaction" name="transaction"
+              ng-options="type as type for type in transactions"></select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="new-item-expiry">Expiry Date</label>
+              <input type="text" class="form-control" name="expiry"
+                ng-model="newItem.expiry" id="new-item-expiry" required
+                uib-datepicker-popup="{{ datePicker.format }}">
+            </div>
+
+            <div class="form-group">
+              <label for="new-item-price">Price</label>
+              <input type="number" class="form-control" id="new-item-price"
+                ng-model="newItem.price" name="bidPrice" required>
+            </div>
+
+            <div ng-show="transaction.selected == 'Auction'"
+              class="form-group">
+              <label for="new-item-bid-start">Starting Bid</label>
+              <input type="text" class="form-control"
+                id="new-item-bid-start" name="start"
+                ng-model="newItem.bidPrice.start">
+            </div>
+          </div>
+
+          <div class="col-md-8">
+            <uib-datepicker ng-model="newItem.expiry"
+              datepicker-options="datePicker.options">
+            </uib-datepicker>
+          </div>
+        </div> <!-- row -->
+      </div> <!-- warframe-new-post-content -->
+    </fieldset>
+
+    <button class="btn btn-success" type="submit"
+      ng-click="ctrl.submitPost()" ng-disabled="newItemForm.$invalid">
+      Post!</button>
+    <button class="btn btn-primary" ng-click="ctrl.cancelPost()">
+      Cancel</button>
+
+  </form>
+
+</div>

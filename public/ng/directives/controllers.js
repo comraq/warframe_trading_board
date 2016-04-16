@@ -9,3 +9,6 @@ exports.modsController =
 
 exports.logInController =
   require("./logIn/logInController.js");
+
+exports.newPostController =
+  require("./newPost/newPostController.js");
