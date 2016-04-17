@@ -1,5 +1,11 @@
-module.exports = function itemApi(Item, ItemCategory, api) {
-  api.post("/newItem", function(req, res) {
+var express = require("express"),
+    api = express.Router();
+
+module.exports = function itemApi(wagner) {
+  var Item = wagner.get("Item"),
+      ItemCategory = wagner.get("ItemCategory");
+
+  api.post("/new", function(req, res) {
     if (process.env.npm_package_config_debug == "true") {
       console.log("posting newItem:");
       console.log(JSON.stringify(req.body, null, 2));
@@ -20,4 +26,10 @@ module.exports = function itemApi(Item, ItemCategory, api) {
 
     res.end();
   });
+
+  api.get("/category", function(req, res) {
+    res.json(wagner.get("ItemCategory").hierarchy);
+  });
+
+  return api;
 };

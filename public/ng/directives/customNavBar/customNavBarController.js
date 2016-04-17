@@ -3,7 +3,7 @@ module.exports = [ "$scope",
                    "$http",
                    "$uibModal",
                     function($scope, $state, $http, $uibModal) {
-  var debug = true;
+  var debug = false;
 
   $scope.ctrl = this;
   this.scope = $scope;
@@ -15,7 +15,7 @@ module.exports = [ "$scope",
 
   /*
    * Item within controller scope, so new post modal
-   * retains previous fields upon re-open
+   * retains previous fields upon re-open/close
    */
   var item = {};
 
@@ -23,11 +23,15 @@ module.exports = [ "$scope",
     item.user = this.scope.user["_id"];
 
     var modalInstance = $uibModal.open({
-      template: "<new-post item='item' modal='modalInstance'></new-post>",
+      template: "<new-post" + " item='item'"
+                            + " cancel='cancel'"
+                            + " catmodel='catmodel'"
+                            + "></new-post>",
       controller: [ "$scope", function($scope) {
         $scope.item = item;
-        $scope.modalInstance = modalInstance;
-      }],
+        $scope.catmodel = this.scope.catModel;
+        $scope.cancel = modalInstance.dismiss;
+      }.bind(this)],
       // So user cannot accidentally close modal by clicking outside
       backdrop: "static"
     });
@@ -58,5 +62,5 @@ module.exports = [ "$scope",
 
   this.notHomeState = function notHomeState() {
     return $state.$current.name != "root.home";
-  }
+  };
 }];

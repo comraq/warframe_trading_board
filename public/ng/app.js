@@ -31,16 +31,23 @@ app.config([ "$stateProvider",
 
   $stateProvider
     .state("root", {
-      template: "<custom-nav-bar user='userSession'></custom-nav-bar>",
+      template: "<custom-nav-bar" + " user='userSession'"
+                                  + " catmodel='categoryHierarchy'"
+                                  + "></custom-nav-bar>",
       resolve: {
         userSession: [ "userSessionService",
                        function(userSessionService) {
           return userSessionService.getUserSession();
+        }],
+        categoryHierarchy: [ "itemCategoryService",
+                             function(itemCategoryService) {
+          return itemCategoryService.getCategoryHierarchy();
         }]
       },
-      controller: [ "$scope", "userSession",
-                    function($scope, userSession) {
+      controller: [ "$scope", "userSession", "categoryHierarchy",
+                    function($scope, userSession, categoryHierarchy) {
         $scope.userSession = userSession;
+        $scope.categoryHierarchy = categoryHierarchy;
       }],
       ncyBreadcrumb: {
         label: "Home"

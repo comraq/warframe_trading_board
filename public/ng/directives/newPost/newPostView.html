@@ -49,7 +49,7 @@
                 ng-model="newItem.price" name="bidPrice" required>
             </div>
 
-            <div ng-show="transaction.selected == 'Auction'"
+            <div ng-show="newItem.transaction == 'Auction'"
               class="form-group">
               <label for="new-item-bid-start">Starting Bid</label>
               <input type="text" class="form-control"

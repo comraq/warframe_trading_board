@@ -4,7 +4,8 @@
  *   user: logged in user id
  * }
  * 
- * $scope.modal = current modal
+ * $scope.cancel = function passed in from outer scope to cancel/return
+ * $scope.catModel = category hierarchy object passed from outer scope
  */
 
 module.exports = [ "$scope",
@@ -37,9 +38,16 @@ module.exports = [ "$scope",
   };
 
   this.submitPost = function submitPost() {
-    console.log(this.scope);
+    var category = this.scope.newItem.category["_id"];
+    this.scope.newItem.category.parent =
+      this.scope.catModel[category].parent;
+    this.scope.newItem.category.ancestors =
+      this.scope.catModel[category].ancestors;
 
-    $http.post("/api/newItem", this.scope.newItem, {
+    if (debug)
+      console.log(this.scope);
+
+    $http.post("/api/item/new", this.scope.newItem, {
                  headers: {
                    "Content-Type": "application/json"
                  }
@@ -60,7 +68,7 @@ module.exports = [ "$scope",
   };
 
   this.cancelPost = function cancelPost() {
-    this.scope.modal.dismiss();
+    this.scope.cancel();
   };
 
   if (!this.scope.newItem.expiry)

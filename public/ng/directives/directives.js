@@ -4,7 +4,8 @@ exports.customNavBar = function() {
     controller: "customNavBarController",
     templateUrl: "/ng/directives/customNavBar/customNavBarView.html",
     scope: {
-      user: "=user"
+      user: "=user",
+      catModel: "=catmodel"
     }
   };
 };
@@ -46,7 +47,8 @@ exports.newPost = function() {
     templateUrl: "/ng/directives/newPost/newPostView.html",
     scope: {
       newItem: "=item",
-      modal: "=modal"
+      cancel: "=cancel",
+      catModel: "=catmodel"
     }
   };
 };
