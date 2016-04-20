@@ -1,0 +1,13 @@
+<!-- ng/directives/modsMode/modsModeView.html -->
+<div ui-view>
+
+  <h3>Select Mod Type:</h3>
+  <hr />
+  <ul>
+    <li ng-repeat="type in types">
+      <a ui-sref="root.mods.mode.type({ type: '{{ type }}'})">
+        {{ type }}</a>
+    </li>
+  </ul>
+
+</div>

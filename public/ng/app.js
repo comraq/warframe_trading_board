@@ -35,11 +35,13 @@ app.config([ "$stateProvider",
                                   + " catmodel='categoryHierarchy'"
                                   + "></custom-nav-bar>",
       resolve: {
-        userSession: [ "userSessionService",
+        userSession: [
+                       "userSessionService",
                        function(userSessionService) {
           return userSessionService.getUserSession();
         }],
-        categoryHierarchy: [ "itemCategoryService",
+        categoryHierarchy: [
+                             "itemCategoryService",
                              function(itemCategoryService) {
           return itemCategoryService.getCategoryHierarchy();
         }]
@@ -66,13 +68,51 @@ app.config([ "$stateProvider",
     })
     .state("root.mods", {
       url: "/mods",
-      template: "<mods user='userSession'></mods>",
-      controller: [ "$scope", "userSession",
-                    function($scope, userSession) {
+      template: "<mods" + " user='userSession'"
+                        + " catmodel='categoryHierarchy'"
+                        + "></mods>",
+      controller: [ "$scope", "userSession", "categoryHierarchy",
+                    function($scope, userSession, categoryHierarchy) {
         $scope.userSession = userSession;
+        $scope.categoryHierarchy = categoryHierarchy;
       }],
       ncyBreadcrumb: {
         label: "Mods"
       }
     })
+    .state("root.mods.mode", {
+      url: "/:mode",
+      template: "<mods-mode" + " user='userSession'"
+                             + " catmodel='categoryHierarchy'"
+                             + " getlabel='getBreadcrumbLabel'"
+                             + "></mods-mode>",
+      controller: [
+                    "$scope",
+                    "$stateParams",
+                    "userSession",
+                    "categoryHierarchy",
+                    function($scope,
+                             $stateParams,
+                             userSession,
+                             categoryHierarchy) {
+        $scope.userSession = userSession;
+        $scope.categoryHierarchy = categoryHierarchy;
+
+        $scope.getBreadcrumbLabel = function() {
+          return $stateParams.mode;
+        };
+      }],
+      ncyBreadcrumb: {
+        label: "{{ getBreadcrumbLabel() }}"
+      }
+    })
+}]);
+
+app.run([
+          "$rootScope",
+          "$state",
+          "$stateParams",
+          function ($rootScope, $state, $stateParams) {
+    $rootScope.$state = $state;
+    $rootScope.$stateParams = $stateParams;
 }]);
