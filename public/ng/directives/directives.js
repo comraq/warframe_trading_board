@@ -36,6 +36,21 @@ exports.mods = function() {
   };
 };
 
+exports.modsHierarchy = function() {
+  return {
+    restrict: "AE",
+    controller: "modsHierarchyController",
+    templateUrl: "/ng/directives/modsHierarchy/modsHierarchyView.html",
+    scope: {
+      user: "=user",
+      catModel: "=catmodel",
+      getModeLabel: "=getmodelabel",
+      getTypeLabel: "=gettypelabel",
+      getCompanionLabel: "=getcompanionlabel"
+    }
+  };
+};
+
 exports.logIn = function() {
   return {
     restrict: "AE",

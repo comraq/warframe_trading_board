@@ -7,6 +7,9 @@ exports.homeController =
 exports.modsController =
   require("./mods/modsController.js");
 
+exports.modsHierarchyController =
+  require("./modsHierarchy/modsHierarchyController.js");
+
 exports.logInController =
   require("./logIn/logInController.js");
 
