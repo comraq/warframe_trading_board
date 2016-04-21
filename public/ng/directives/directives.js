@@ -1,3 +1,15 @@
+exports.root = function() {
+  return {
+    restrict: "AE",
+    controller: "rootController",
+    templateUrl: "/ng/directives/root/rootView.html",
+    scope: {
+      user: "=user",
+      catModel: "=catmodel"
+    }
+  };
+};
+
 exports.customNavBar = function() {
   return {
     restrict: "AE",
@@ -16,7 +28,8 @@ exports.home = function() {
     controller: "homeController",
     templateUrl: "/ng/directives/home/homeView.html",
     scope: {
-      user: "=user"
+      user: "=user",
+      catModel: "=catmodel"
     }
   };
 };

@@ -1,8 +1,7 @@
 module.exports = [ "$scope",
-                   "$state",
                    "$http",
                    "$uibModal",
-                    function($scope, $state, $http, $uibModal) {
+                    function($scope, $http, $uibModal) {
   var debug = false;
 
   $scope.ctrl = this;
@@ -58,9 +57,5 @@ module.exports = [ "$scope",
            if (debug)
              console.log("LogOut Failed!");
          });
-  };
-
-  this.notHomeState = function notHomeState() {
-    return $state.$current.name != "root.home";
   };
 }];

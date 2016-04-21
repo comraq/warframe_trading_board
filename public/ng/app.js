@@ -32,9 +32,52 @@ app.config([ "$stateProvider",
 
   $stateProvider
     .state("root", {
-      template: "<custom-nav-bar" + " user='userSession'"
-                                  + " catmodel='categoryHierarchy'"
-                                  + "></custom-nav-bar>",
+      url: "/home",
+      views: {
+        "": {
+          template: "<root" + " user='userSession'"
+                            + " catmodel='categoryHierarchy'>"
+                            + "></root>",
+          controller: [ "$scope", "userSession", "categoryHierarchy",
+                        function($scope, userSession, categoryHierarchy) {
+            $scope.userSession = userSession;
+            $scope.categoryHierarchy = categoryHierarchy;
+          }]
+/*
+          templateUrl: "/ng/root.html",
+          controller: [
+                        "$scope",
+                        "$state",
+                        "userSession",
+                        "categoryHierarchy",
+                        function($scope,
+                                 $state,
+                                 userSession,
+                                 categoryHierarchy) {
+                        $scope.userSession = userSession;
+                        $scope.categoryHierarchy = categoryHierarchy;
+
+                        $scope.ctrl = this;
+                        this.rootState = function rootState() {
+                          return $state.current.name == "root";
+                        };
+
+                        console.log("inside root view controller");
+                        console.log($scope);
+          }]
+*/
+        },
+        "home@root": {
+          template: "<home" + " user='userSession'"
+                            + " catmodel='categoryHierarchy'>"
+                            + "></home>",
+          controller: [ "$scope", "userSession", "categoryHierarchy",
+                        function($scope, userSession, categoryHierarchy) {
+            $scope.userSession = userSession;
+            $scope.categoryHierarchy = categoryHierarchy;
+          }]
+        }
+      },
       resolve: {
         userSession: [
                        "userSessionService",
@@ -47,24 +90,8 @@ app.config([ "$stateProvider",
           return itemCategoryService.getCategoryHierarchy();
         }]
       },
-      controller: [ "$scope", "userSession", "categoryHierarchy",
-                    function($scope, userSession, categoryHierarchy) {
-        $scope.userSession = userSession;
-        $scope.categoryHierarchy = categoryHierarchy;
-      }],
       ncyBreadcrumb: {
         label: "Home"
-      }
-    })
-    .state("root.home", {
-      url: "/home",
-      template: "<home user='userSession'></home>",
-      controller: [ "$scope", "userSession",
-                    function($scope, userSession) {
-        $scope.userSession = userSession;
-      }],
-      ncyBreadcrumb: {
-        skip: true
       }
     })
     .state("root.mods", {

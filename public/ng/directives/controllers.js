@@ -1,3 +1,6 @@
+exports.rootController =
+  require("./root/rootController.js");
+
 exports.customNavBarController =
   require("./customNavBar/customNavBarController.js");
 
