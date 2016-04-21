@@ -2,15 +2,14 @@ module.exports = [ "$scope", "$state", function($scope, $state) {
   $scope.ctrl = this;
   this.scope = $scope;
 
-  var debug = true;
-
+  var debug = false;
   var nextLevel = {};
 
   this.toNextState = function toNextState(selectedOption) {
+    // Inherit all stateParams but the 'level' stateParam
     var nextParams = $state.params;
     nextParams[nextLevel.value.toLowerCase()] = selectedOption;
-    console.log("nextParams:");
-    console.log(nextParams);
+    delete nextParams.level;
 
     $state.go("root.mods." + nextLevel.value.toLowerCase(), nextParams);
   };

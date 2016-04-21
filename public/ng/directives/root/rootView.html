@@ -1,12 +1,10 @@
-<custom-nav-bar user='user'
-                catmodel='catModel'
-                ></custom-nav-bar>
+<div ui-view="navbar"></div>
 
 <div class="container">
-  <div ng-if="ctrl.rootState()" ui-view="home"></div>
+  <div ng-if="ctrl.isRootState()" ui-view="home"></div>
 
-  <div ng-if="!ctrl.rootState()">
+  <div ng-if="!ctrl.isRootState()">
     <div ncy-breadcrumb></div>
-    <div ui-view></div>
+    <div ui-view="item"></div>
   </div>
 </div>

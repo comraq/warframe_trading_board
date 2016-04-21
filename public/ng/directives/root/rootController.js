@@ -5,7 +5,7 @@ module.exports = [ "$scope",
   $scope.ctrl = this;
   this.scope = $scope
 
-  this.rootState = function rootState() {
-    return $state.current.name == "root";
+  this.isRootState = function isRootState() {
+    return $state.is("root");
   };
 }];
