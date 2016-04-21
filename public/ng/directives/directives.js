@@ -28,20 +28,10 @@ exports.mods = function() {
     templateUrl: "/ng/directives/mods/modsView.html",
     scope: {
       user: "=user",
-      catModel: "=catmodel"
-    }
-  };
-};
-
-exports.modsMode = function() {
-  return {
-    restrict: "AE",
-    controller: "modsModeController",
-    templateUrl: "/ng/directives/modsMode/modsModeView.html",
-    scope: {
-      user: "=user",
       catModel: "=catmodel",
-      getBreadcrumbLabel: "=getlabel"
+      getModeLabel: "=getmodelabel",
+      getTypeLabel: "=gettypelabel",
+      getCompanionLabel: "=getcompanionlabel"
     }
   };
 };

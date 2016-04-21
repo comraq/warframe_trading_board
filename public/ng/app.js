@@ -1,6 +1,7 @@
 var controllers = require("./directives/controllers"),
     directives = require("./directives/directives"),
-    services = require("./services/services");
+    services = require("./services/services"),
+    debug = false;
 
 var components = angular.module("app_components", ["ng"]);
 
@@ -68,6 +69,9 @@ app.config([ "$stateProvider",
     })
     .state("root.mods", {
       url: "/mods",
+      params: {
+        level: null
+      },
       template: "<mods" + " user='userSession'"
                         + " catmodel='categoryHierarchy'"
                         + "></mods>",
@@ -82,10 +86,13 @@ app.config([ "$stateProvider",
     })
     .state("root.mods.mode", {
       url: "/:mode",
-      template: "<mods-mode" + " user='userSession'"
-                             + " catmodel='categoryHierarchy'"
-                             + " getlabel='getBreadcrumbLabel'"
-                             + "></mods-mode>",
+      params: {
+        level: "Mode"
+      },
+      template: "<mods" + " user='userSession'"
+                        + " catmodel='categoryHierarchy'"
+                        + " getmodelabel='getModeLabel'"
+                        + "></mods>",
       controller: [
                     "$scope",
                     "$stateParams",
@@ -98,12 +105,85 @@ app.config([ "$stateProvider",
         $scope.userSession = userSession;
         $scope.categoryHierarchy = categoryHierarchy;
 
-        $scope.getBreadcrumbLabel = function() {
+        $scope.getModeLabel = function() {
           return $stateParams.mode;
         };
       }],
       ncyBreadcrumb: {
-        label: "{{ getBreadcrumbLabel() }}"
+        label: "{{ getModeLabel() }}"
+      }
+    })
+    .state("root.mods.mode.type", {
+      url: "/:type",
+      params: {
+        level: "Type"
+      },
+      template: "<mods" + " user='userSession'"
+                             + " catmodel='categoryHierarchy'"
+                             + " getmodelabel='getModeLabel'"
+                             + " gettypelabel='getTypeLabel'"
+                             + "></mods>",
+      controller: [
+                    "$scope",
+                    "$stateParams",
+                    "userSession",
+                    "categoryHierarchy",
+                    function($scope,
+                             $stateParams,
+                             userSession,
+                             categoryHierarchy) {
+        $scope.userSession = userSession;
+        $scope.categoryHierarchy = categoryHierarchy;
+
+        $scope.getModeLabel = function() {
+          return $stateParams.mode;
+        };
+
+        $scope.getTypeLabel = function() {
+          return $stateParams.type;
+        };
+      }],
+      ncyBreadcrumb: {
+        label: "{{ getTypeLabel() }}"
+      }
+    })
+    .state("root.mods.mode.type.companion", {
+      url: "/:companion",
+      params: {
+        level: "Companion"
+      },
+      template: "<mods" + " user='userSession'"
+                             + " catmodel='categoryHierarchy'"
+                             + " getmodelabel='getModeLabel'"
+                             + " gettypelabel='getTypeLabel'"
+                             + " getcompanionlabel='getCompanionLabel'"
+                             + "></mods>",
+      controller: [
+                    "$scope",
+                    "$stateParams",
+                    "userSession",
+                    "categoryHierarchy",
+                    function($scope,
+                             $stateParams,
+                             userSession,
+                             categoryHierarchy) {
+        $scope.userSession = userSession;
+        $scope.categoryHierarchy = categoryHierarchy;
+
+        $scope.getModeLabel = function() {
+          return $stateParams.mode;
+        };
+
+        $scope.getTypeLabel = function() {
+          return $stateParams.type;
+        };
+
+        $scope.getCompanionLabel = function() {
+          return $stateParams.companion;
+        };
+      }],
+      ncyBreadcrumb: {
+        label: "{{ getCompanionLabel() }}"
       }
     })
 }]);
@@ -112,7 +192,24 @@ app.run([
           "$rootScope",
           "$state",
           "$stateParams",
-          function ($rootScope, $state, $stateParams) {
-    $rootScope.$state = $state;
-    $rootScope.$stateParams = $stateParams;
+          "$urlRouter",
+          function ($rootScope, $state, $stateParams, $urlRouter) {
+  $rootScope.$state = $state;
+  $rootScope.$stateParams = $stateParams;
+
+  $rootScope.$on("$stateChangeStart", function(evt, toState, toParams,
+                                               fromState, fromParams) {
+    if (debug) {
+      console.log("state changed");
+      console.log(toState);
+      console.log(toParams);
+      console.log(fromState);
+      console.log(fromParams);
+    }
+
+    // Ensure that the next state gets passed the correct 'level' parameter
+    // for modsView nested category select hierarchy
+    if (toState.params.level !== undefined)
+      toParams.level = toState.params.level;
+  });
 }]);

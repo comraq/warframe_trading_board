@@ -1,2 +1,3 @@
 *.swp
+/archive
 node_modules/*

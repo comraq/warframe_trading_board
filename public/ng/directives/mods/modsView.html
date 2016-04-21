@@ -1,13 +1,22 @@
 <!-- ng/directives/mods/modsView.html -->
-<div ui-view>
+<div ng-if="notActiveState" ui-view>
 
-  <h3>Select Game Mode:</h3>
+
+</div>
+
+<div ng-if="!notActiveState">
+  <h3>Select From the Following:</h3>
   <hr />
-  <ul>
-    <li ng-repeat="mode in modes">
-      <a ui-sref="root.mods.mode({ mode: '{{ mode }}'})">
-        {{ mode }}</a>
+  <ul ng-show="options">
+    <li ng-repeat="option in options">
+      <a href="" ng-click="ctrl.toNextState(option)">
+        {{ option }}</a>
     </li>
   </ul>
-
+  <ul ng-show="tempListItems">
+    <li ng-repeat="item in tempListItems">
+      <a href="">
+        {{ item }}</a>
+    </li>
+  </ul>
 </div>
