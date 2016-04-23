@@ -14,32 +14,31 @@ module.exports = [ "$scope", "$state", function($scope, $state) {
     $state.go("root.mods." + nextLevel.value.toLowerCase(), nextParams);
   };
 
-  this.scope.$on("$stateChangeSuccess",
-                 function modsDirectiveStateChangeSuccess() {
-    reloadDirective();
-  });
-
   function reloadDirective() {
     var stateParams = $state.params,
         catModelKey = { value: "Mods" };
 
-    $scope.notActiveState = false;
+//    $scope.notActiveState = false;
     switch(stateParams.level) {
       case "Mode":
+/*
         if (!$scope.getModeLabel) {
           $scope.notActiveState = true;
           break;
         }
+*/
 
         catModelKey.value += ("." + stateParams.mode);
         nextLevel.value = "Type";
         break;
 
       case "Type":
+/*
         if (!$scope.getTypeLabel) {
           $scope.notActiveState = true;
           break;
         }
+*/
 
         catModelKey.value += ("." + stateParams.mode + "."
                                   + stateParams.type);
@@ -47,10 +46,12 @@ module.exports = [ "$scope", "$state", function($scope, $state) {
         break;
 
       case "Companion":
+/*
         if (!$scope.getCompanionLabel) {
           $scope.notActiveState = true;
           break;
         }
+*/
 
         catModelKey.value += ("." + stateParams.mode + "."
                                   + stateParams.type + "."
@@ -59,8 +60,10 @@ module.exports = [ "$scope", "$state", function($scope, $state) {
         break;
 
       default:
+/*
         if ($scope.getModeLabel || $scope.getTypeLabel)
           $scope.notActiveState = true;
+*/
 
         nextLevel.value = "Mode";
     }

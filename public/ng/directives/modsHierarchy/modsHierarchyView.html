@@ -1,17 +1,15 @@
 <!-- ng/directives/modsHierarchy/modsHierarchyView.html -->
-<div ng-if="!notActiveState">
-  <h3>Select From the Following:</h3>
-  <hr />
-  <ul ng-show="options">
-    <li ng-repeat="option in options">
-      <a href="" ng-click="ctrl.toNextState(option)">
-        {{ option }}</a>
-    </li>
-  </ul>
-  <ul ng-show="tempListItems">
-    <li ng-repeat="item in tempListItems">
-      <a href="">
-        {{ item }}</a>
-    </li>
-  </ul>
-</div>
+<h3>Select From the Following:</h3>
+<hr />
+<ul ng-show="options">
+  <li ng-repeat="option in options">
+    <a href="" ng-click="ctrl.toNextState(option)">
+      {{ option }}</a>
+  </li>
+</ul>
+<ul ng-show="tempListItems">
+  <li ng-repeat="item in tempListItems">
+    <a href="">
+      {{ item }}</a>
+  </li>
+</ul>
