@@ -1,11 +1,5 @@
 module.exports = [ "$scope",
-                   "$state",
-                   function($scope,
-                            $state) {
+                   function($scope) {
   $scope.ctrl = this;
   this.scope = $scope
-
-  this.isRootState = function isRootState() {
-    return $state.is("root");
-  };
 }];

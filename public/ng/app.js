@@ -45,7 +45,7 @@ app.config([ "$stateProvider",
             $scope.categoryHierarchy = categoryHierarchy;
           }]
         },
-        "home@root": {
+        "body@root": {
           template: "<home" + " user='userSession'"
                             + " catmodel='categoryHierarchy'>"
                             + "></home>",
@@ -75,7 +75,10 @@ app.config([ "$stateProvider",
     .state("root.mods", {
       url: "/mods",
       views: {
-        "item@root": {
+        "breadcrumb@root": {
+          template: "<div ncy-breadcrumb></div>"
+        },
+        "body@root": {
           template: "<mods-hierarchy" + " user='userSession'"
                                       + " catmodel='categoryHierarchy'"
                                       + "></mods-hierarchy>",
@@ -96,7 +99,7 @@ app.config([ "$stateProvider",
         level: "Mode"
       },
       views: {
-        "item@root": {
+        "body@root": {
           template: "<mods-hierarchy" + " user='userSession'"
                                       + " catmodel='categoryHierarchy'"
                                       + " getmodelabel='getModeLabel'"
@@ -129,7 +132,7 @@ app.config([ "$stateProvider",
         level: "Type"
       },
       views: {
-        "item@root": {
+        "body@root": {
           template: "<mods-hierarchy" + " user='userSession'"
                                       + " catmodel='categoryHierarchy'"
                                       + " getmodelabel='getModeLabel'"
@@ -168,7 +171,7 @@ app.config([ "$stateProvider",
         level: "Companion"
       },
       views: {
-        "item@root": {
+        "body@root": {
           template: "<mods-hierarchy"
                       + " user='userSession'"
                       + " catmodel='categoryHierarchy'"

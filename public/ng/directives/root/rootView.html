@@ -1,10 +1,6 @@
 <div ui-view="navbar"></div>
 
 <div class="container">
-  <div ng-if="ctrl.isRootState()" ui-view="home"></div>
-
-  <div ng-if="!ctrl.isRootState()">
-    <div ncy-breadcrumb></div>
-    <div ui-view="item"></div>
-  </div>
+  <div ui-view="breadcrumb"></div>
+  <div ui-view="body"></div>
 </div>
