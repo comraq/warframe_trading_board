@@ -7,8 +7,8 @@ exports.customNavBarController =
 exports.homeController =
   require("./home/homeController.js");
 
-exports.modsController =
-  require("./mods/modsController.js");
+exports.modsItemsController =
+  require("./modsItems/modsItemsController.js");
 
 exports.modsHierarchyController =
   require("./modsHierarchy/modsHierarchyController.js");

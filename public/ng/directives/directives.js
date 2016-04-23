@@ -34,17 +34,14 @@ exports.home = function() {
   };
 };
 
-exports.mods = function() {
+exports.modsItems = function() {
   return {
     restrict: "AE",
-    controller: "modsController",
-    templateUrl: "/ng/directives/mods/modsView.html",
+    controller: "modsItemsController",
+    templateUrl: "/ng/directives/modsItems/modsItemsView.html",
     scope: {
       user: "=user",
-      catModel: "=catmodel",
-      getModeLabel: "=getmodelabel",
-      getTypeLabel: "=gettypelabel",
-      getCompanionLabel: "=getcompanionlabel"
+      catModel: "=catmodel"
     }
   };
 };

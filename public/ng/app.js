@@ -75,10 +75,11 @@ app.config([ "$stateProvider",
     .state("root.mods", {
       url: "/mods",
       views: {
-        "breadcrumb@root": {
-          template: "<div ncy-breadcrumb></div>"
+        "breadcrumb": { template: "<div ncy-breadcrumb></div>" },
+        "body": {
+          templateUrl: "/ng/templates/root-mods-body-template.html"
         },
-        "body@root": {
+        "hierarchy@root.mods": {
           template: "<mods-hierarchy" + " user='userSession'"
                                       + " catmodel='categoryHierarchy'"
                                       + "></mods-hierarchy>",
@@ -99,7 +100,7 @@ app.config([ "$stateProvider",
         level: "Mode"
       },
       views: {
-        "body@root": {
+        "hierarchy": {
           template: "<mods-hierarchy" + " user='userSession'"
                                       + " catmodel='categoryHierarchy'"
                                       + " getmodelabel='getModeLabel'"
@@ -120,6 +121,12 @@ app.config([ "$stateProvider",
               return $stateParams.mode;
             };
           }]
+        },
+        "items": {
+          controller: [ "$scope", function($scope) {
+            // Must explicitly set breadcrumb ignore for multiview scopes
+            $scope.ncyBreadcrumbIgnore = true;
+          }]
         }
       },
       ncyBreadcrumb: {
@@ -132,7 +139,7 @@ app.config([ "$stateProvider",
         level: "Type"
       },
       views: {
-        "body@root": {
+        "hierarchy": {
           template: "<mods-hierarchy" + " user='userSession'"
                                       + " catmodel='categoryHierarchy'"
                                       + " getmodelabel='getModeLabel'"
@@ -158,6 +165,25 @@ app.config([ "$stateProvider",
               return $stateParams.type;
             };
           }]
+        },
+        "items": {
+          template: "<mods-items"
+                      + " user='userSession'"
+                      + " catmodel='categoryHierarchy'"
+                      + "></mods-items>",
+          controller: [
+                        "$scope",
+                        "userSession",
+                        "categoryHierarchy",
+                        function($scope,
+                                 userSession,
+                                 categoryHierarchy) {
+            $scope.userSession = userSession;
+            $scope.categoryHierarchy = categoryHierarchy;
+
+            // Must explicitly set breadcrumb ignore for multiview scopes
+            $scope.ncyBreadcrumbIgnore = true;
+          }]
         }
       },
       ncyBreadcrumb: {
@@ -171,7 +197,7 @@ app.config([ "$stateProvider",
         level: "Companion"
       },
       views: {
-        "body@root": {
+        "hierarchy": {
           template: "<mods-hierarchy"
                       + " user='userSession'"
                       + " catmodel='categoryHierarchy'"
@@ -202,6 +228,25 @@ app.config([ "$stateProvider",
             $scope.getCompanionLabel = function() {
               return $stateParams.companion;
             };
+          }]
+        },
+        "items": {
+          template: "<mods-items"
+                      + " user='userSession'"
+                      + " catmodel='categoryHierarchy'"
+                      + "></mods-items>",
+          controller: [
+                        "$scope",
+                        "userSession",
+                        "categoryHierarchy",
+                        function($scope,
+                                 userSession,
+                                 categoryHierarchy) {
+            $scope.userSession = userSession;
+            $scope.categoryHierarchy = categoryHierarchy;
+
+            // Must explicitly set breadcrumb ignore for multiview scopes
+            $scope.ncyBreadcrumbIgnore = true;
           }]
         }
       },
