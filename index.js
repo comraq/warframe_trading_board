@@ -7,16 +7,16 @@ var app = express(),
 
 // Dependencies must be required before the others!
 require('./config/dependencies')(wagner, port);
-require("./models/models")(wagner);
+require("./models")(wagner);
 
 wagner.factory("app", function() {
   return app;
 })
 
 app.use(morgan("dev"));
-require("./auth/auth")(wagner);
+require("./auth")(wagner);
 
-app.use("/api", require("./routes/api")(wagner));
+app.use("/api", require("./routes")(wagner));
 app.use("/", express.static(__dirname + "/public"));
 
 app.listen(port);

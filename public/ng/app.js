@@ -15,8 +15,8 @@ for (var serviceName in services)
   components.service(serviceName, services[serviceName]);
 
 var app = angular.module("warframeTrade", [
-                                            "ngAnimate",
-                                            "ngTouch",
+                                            require("angular-animate"),
+                                            require("angular-touch"),
                                             "ui.bootstrap",
                                             "ui.router",
                                             "ncy-angular-breadcrumb",
