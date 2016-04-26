@@ -3,7 +3,7 @@ var mongoose = require("mongoose"),
     ItemModel = require("./item"),
     UserModel = require("./user");
 
-module.exports = function(wagner) {
+module.exports = function modelsIndex(wagner) {
   wagner.invoke(function(Config) {
     var dbConfig = Config.warframeDB;
     var hostname = dbConfig.hostname || "localhost",

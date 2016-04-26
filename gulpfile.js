@@ -1,134 +1,37 @@
 var gulp = require("gulp"),
-    mocha = require("gulp-mocha"),
-    util = require("gulp-util"),
-    newer = require("gulp-newer"),
-    rename = require("gulp-rename"),
-    browserify = require("browserify"),
-    uglify = require("gulp-uglify"),
-    cleanCSS = require("gulp-clean-css"),
-    concat = require("gulp-concat"),
-    sourcemaps = require("gulp-sourcemaps"),
-    tap = require("gulp-tap"),
-    buffer = require("vinyl-buffer"),
-    source = require("vinyl-source-stream"),
-    fs = require("fs");
+    wagner = require("wagner-core");
 
-var BIN_PATH = "./public/bin",
-    production = util.env.production || false;
+var gulpTasksDir = "./gulp-tasks/";
 
-gulp.task("browserify_js", function() {
-  return browserify("./public/ng/app.js")
-    .bundle()
-    .on("error", function(err) {
-      util.log(err);
-      this.emit("end");
-    })
-    .pipe(source("bundle.js"))
-    .pipe(buffer())
-    .pipe(rename("scripts.min.js"))
-    .pipe((!production)? sourcemaps.init() : util.noop())
-      .pipe(uglify())
-    .pipe((!production)? sourcemaps.write("./scripts") : util.noop())
-    .pipe(gulp.dest(BIN_PATH));
+wagner.factory("gulp", function() {
+  return gulp;
 });
 
-gulp.task("concat_css", function() {
-  return gulp.src([
-                    "./public/**/*.css",
-                    "!" + BIN_PATH + "**/*.css",
-                    "!./public/lib/**/*.css"
-                  ])
-    .pipe((!production)? sourcemaps.init() : util.noop())
-      .pipe(cleanCSS())
-      .pipe(concat("styles.min.css"))
-    .pipe((!production)? sourcemaps.write() : util.noop())
-    .pipe(gulp.dest(BIN_PATH));
+wagner.factory("plugins", function() {
+  return require("gulp-load-plugins")({
+    rename: { "gulp-clean-css": "cleanCSS" }
+  });
 });
 
-gulp.task("watch_app", function() {
-  var colour = (production)? util.colors.bgGreen : util.colors.bgYellow;
+wagner.constant("BIN_PATH", "./public/bin");
+wagner.constant("production", require("gulp-util").env.production || false);
+wagner.constant("ALL_SRC_JS", [
+  "./**/*.js",
+  "!./gulpfile.js",
+  "!./gulp-tasks/**/*.js",
+  "!./test/**/*.js"
+]);
 
-  util.log("Production", colour(production));
-  gulp.watch([
-               "./public/**/*.js",
-               "!" + BIN_PATH + "/**/*.js",
-               "!./public/lib/**/*.js"
-             ],
-             [ "browserify_js" ]);
-  gulp.watch([
-               "./public/**/*.css",
-               "!" + BIN_PATH + "/**/*.css",
-               "!./public/lib/**/*.css"
-             ],
-             [ "concat_css" ]);
-});
+gulp.task("watch", getTask("watch"));
+gulp.task("minify-vendor-js", getTask("minify-vendor-js"));
+gulp.task("minify-vendor-css", getTask("minify-vendor-css"));
+gulp.task("minify-js", getTask("minify-js"));
+gulp.task("minify-css", getTask("minify-css"));
 
-gulp.task("concat_vendor_stylesheets", function() {
-  var srcPaths = [
-                   "./node_modules/bootstrap/dist/**/*.css",
-                   "./public/lib/**/*.css"
-                 ],
-      outfileName = "vendors.min.css";
+gulp.task("default", getTask("default"));
+gulp.task("tests", getTask("tests"));
+gulp.task("sanity", getTask("sanity"));
 
-  return gulp.src(srcPaths)
-    .pipe(newer(BIN_PATH + "/" + outfileName))
-    .pipe(cleanCSS())
-    .pipe(concat(outfileName))
-    .pipe(gulp.dest(BIN_PATH));
-});
-
-gulp.task("browserify_vendor_scripts", function() {
-  var srcPath = "./public/lib/vendors.js",
-      outfileName = "vendors.min.js";
-
-  return browserify(srcPath)
-    .bundle()
-    .on("error", function(err) {
-      util.log(err);
-      this.emit("end");
-    })
-    .pipe(source("bundle.js"))
-    .pipe(buffer())
-    .pipe(tap(function(file, t) {
-      // Manually tack on the .stat property for
-      // the dynamically created vinyl file
-      file.stat = fs.statSync(srcPath);
-     }))
-    .pipe(newer(BIN_PATH + "/" + outfileName))
-    .pipe(uglify())
-    .pipe(rename(outfileName))
-    .pipe(gulp.dest(BIN_PATH));
-});
-
-// Gulp tasks for tests
-var ALL_JS_SRC_FILES = [
-                         "./**/*.js",
-                         "!./gulpfile.js",
-                         "!./test/**/*.js"
-                       ],
-    testSuite = "sanity";
-
-gulp.task("tests", function() {
-  var error = false;
-  return gulp
-    .src("./test/*.js") 
-    .pipe(mocha({ grep: testSuite }))
-    .on("error", function(err) {
-      util.log(err);
-      console.log("Tests in " + testSuite + " failed!");
-      error = true;
-    })
-    .on("end", function() {
-      if (!error)
-        console.log("Tests in " + testSuite + " passed!");
-    });
-});
-
-gulp.task("default", function() {
-  return gulp.watch(ALL_JS_SRC_FILES, [ "tests" ]);
-});
-
-gulp.task("sanity", function() {
-  testSuite = "sanity";
-  return gulp.watch(ALL_JS_SRC_FILES, [ "tests" ]);
-});
+function getTask(task) {
+  return wagner.invoke(require(gulpTasksDir + task));
+}

@@ -37,6 +37,6 @@ module.exports = function(wagner) {
 */
   });
 
-  api.use("/item", require("./itemApi")(wagner));
+  api.use("/item", wagner.invoke(require("./itemApi")));
   return api;
 };

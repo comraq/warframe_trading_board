@@ -1,10 +1,7 @@
 var express = require("express"),
     api = express.Router();
 
-module.exports = function itemApi(wagner) {
-  var Item = wagner.get("Item"),
-      ItemCategory = wagner.get("ItemCategory");
-
+module.exports = function itemApi(Item, ItemCategory) {
   api.post("/new", function(req, res) {
     if (process.env.npm_package_config_debug == "true") {
       console.log("posting newItem:");
@@ -28,7 +25,7 @@ module.exports = function itemApi(wagner) {
   });
 
   api.get("/category", function(req, res) {
-    res.json(wagner.get("ItemCategory").hierarchy);
+    res.json(ItemCategory.hierarchy);
   });
 
   return api;

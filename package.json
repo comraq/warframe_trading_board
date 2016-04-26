@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "watch": "gulp watch_app browserify_vendor_scripts concat_vendor_stylesheets --production",
-    "watchd": "gulp watch_app browserify_vendor_scripts concat_vendor_stylesheets",
-    "test": "./node_modules/gulp/bin/gulp.js"
+    "watch": "gulp watch minify-vendor-js minify-vendor-css --production",
+    "watchd": "gulp watch minify-vendor-js minify-vendor-css",
+    "test": "gulp"
   },
   "config": {
     "debug": false
@@ -38,6 +38,7 @@
     "gulp": "^3.9.1",
     "gulp-clean-css": "^2.0.6",
     "gulp-concat": "^2.6.0",
+    "gulp-load-plugins": "^1.2.2",
     "gulp-mocha": "^2.2.0",
     "gulp-newer": "^1.1.0",
     "gulp-rename": "^1.2.2",
