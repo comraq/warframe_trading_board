@@ -1,19 +1,3 @@
-var controllers = require("./directives/controllers"),
-    directives = require("./directives/directives"),
-    services = require("./services/services"),
-    debug = false;
-
-var components = angular.module("app_components", ["ng"]);
-
-for (var controllerName in controllers)
-  components.controller(controllerName, controllers[controllerName]);
-
-for (var directiveName in directives)
-  components.directive(directiveName, directives[directiveName]);
-      
-for (var serviceName in services)
-  components.service(serviceName, services[serviceName]);
-
 var app = angular.module("warframeTrade", [
                                             require("angular-animate"),
                                             require("angular-touch"),
@@ -21,8 +5,10 @@ var app = angular.module("warframeTrade", [
                                             "ui.router",
                                             "ncy-angular-breadcrumb",
                                             "ngScrollable",
-                                            "app_components"
+                                            require("./directives"),
+                                            require("./services")
                                           ]);
+var debug = false;
 
 app.config([ "$stateProvider",
              "$urlRouterProvider",
