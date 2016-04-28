@@ -32,6 +32,7 @@ module.exports = function categoryApi(ItemCategory) {
     });
   });
 
+  // Returns an array children of categories defined by the url path
   api.get("/children/*", function getChildren(req, res) {
     var ancestors = req.params[0].replace(/(^\/|\/$)/g, "").split("/");
     var parent = ancestors.slice(-1);
@@ -58,7 +59,7 @@ module.exports = function categoryApi(ItemCategory) {
 
   });
 
-
+  // Returns the category object defined by the url path
   api.get("*", function getCategory(req, res) {
     var ancestors = req.params[0].replace(/(^\/|\/$)/g, "").split("/");
     var current = ancestors.pop()
