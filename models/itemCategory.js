@@ -1,133 +1,141 @@
 var  mongoose = require('mongoose');
 
 var itemCategoryObject = {
-  _id: { type: String, required: true },
+  _id: String,
+  name: { type: String, required: true },
   parent: {
     type: String,
-    ref: "ItemCategory"
   },
   ancestors: [{
-    type: String,
-    ref: "ItemCategory"
+    type: String
   }]
 };
 
 var schema = new mongoose.Schema(itemCategoryObject);
+schema.pre("validate", function(next) {
+  // Manually set the _id based on the category name and ancestors
+  var prefix;
+  if (this.ancestors || this.ancestors.length > 0)
+    prefix = this.ancestors.join(".");
+
+  this._id = (prefix)? (prefix + "." + this.name) : this.name;
+
+  next();
+});
+
 module.exports = mongoose.model("ItemCategory", schema, "item-categories");
 
-// Note: children array not stored in database! Only for UI searching
-module.exports.hierarchy = {
-  Item: {
+// Note: A copy of the actual hierarchy tree/objects stored in
+//       the item-categories collection
+module.exports.hierarchy = [
+  {
+    name: "Item",
     parent: null,
-    ancestors: [],
-    children: [ "Mods", "Sortie Weapons", "Void Parts", "Keys", "Arcanes" ]
+    ancestors: []
   },
-  Mods: {
+  {
+    name: "Mods",
     parent: "Item",
-    ancestors: [ "Item" ],
-    children: [ "Cooperative", "Archwing", "Conclave" ]
+    ancestors: [ "Item" ]
   },
-  "Mods.Cooperative": {
+  {
+    name: "Cooperative",
     parent: "Mods",
-    ancestors: [ "Item", "Mods" ],
-    children: [ "Warframe", "Primary", "Secondary", "Melee", "Companion" ]
+    ancestors: [ "Item", "Mods" ]
   },
-  "Mods.Cooperative.Warframe": {
-    parent: "Mods.Cooperative",
-    ancestors: [ "Item", "Mods", "Mods.Cooperative" ],
-    children: null
+  {
+    name: "Warframe",
+    parent: "Cooperative",
+    ancestors: [ "Item", "Mods", "Cooperative" ]
   },
-  "Mods.Cooperative.Primary": {
-    parent: "Mods.Cooperative",
-    ancestors: [ "Item", "Mods", "Mods.Cooperative" ],
-    children: null
+  {
+    name: "Primary",
+    parent: "Cooperative",
+    ancestors: [ "Item", "Mods", "Cooperative" ]
   },
-  "Mods.Cooperative.Secondary": {
-    parent: "Mods.Cooperative",
-    ancestors: [ "Item", "Mods", "Mods.Cooperative" ],
-    children: null
+  {
+    name: "Secondary",
+    parent: "Cooperative",
+    ancestors: [ "Item", "Mods", "Cooperative" ]
   },
-  "Mods.Cooperative.Melee": {
-    parent: "Mods.Cooperative",
-    ancestors: [ "Item", "Mods", "Mods.Cooperative" ],
-    children: null
+  {
+    name: "Melee",
+    parent: "Cooperative",
+    ancestors: [ "Item", "Mods", "Cooperative" ]
   },
-  "Mods.Cooperative.Companion": {
-    parent: "Mods.Cooperative",
-    ancestors: [ "Item", "Mods", "Mods.Cooperative" ],
-    children: [ "Sentinels", "Kubrow", "Kavats" ]
+  {
+    name: "Companion",
+    parent: "Cooperative",
+    ancestors: [ "Item", "Mods", "Cooperative" ]
   },
-  "Mods.Cooperative.Companion.Sentinels": {
-    parent: "Mods.Cooperative.Companion",
-    ancestors: [ "Item", "Mods", "Mods.Cooperative",
-                 "Mods.Cooperative.Companion" ],
-    children: null
+  {
+    name: "Sentinels",
+    parent: "Companion",
+    ancestors: [ "Item", "Mods", "Cooperative", "Companion" ]
   },
-  "Mods.Cooperative.Companion.Kubrow": {
-    parent: "Mods.Cooperative.Companion",
-    ancestors: [ "Item", "Mods", "Mods.Cooperative",
-                 "Mods.Cooperative.Companion" ],
-    children: null
+  {
+    name: "Kubrow",
+    parent: "Companion",
+    ancestors: [ "Item", "Mods", "Cooperative", "Companion" ]
   },
-  "Mods.Cooperative.Companion.Kavats": {
-    parent: "Mods.Cooperative.Companion",
-    ancestors: [ "Item", "Mods", "Mods.Cooperative",
-                 "Mods.Cooperative.Companion" ],
-    children: null
+  {
+    name: "Kavats",
+    parent: "Companion",
+    ancestors: [ "Item", "Mods", "Cooperative", "Companion" ]
   },
-  "Mods.Archwing": {
+  {
+    name: "Archwing",
     parent: "Mods",
-    ancestors: [ "Item", "Mods" ],
-    children: [ "Primary", "Melee" ]
+    ancestors: [ "Item", "Mods" ]
   },
-  "Mods.Archwing.Primary": {
-    parent: "Mods.Archwing",
-    ancestors: [ "Item", "Mods", "Mods.Archwing" ],
-    children: null
+  {
+    name: "Primary",
+    parent: "Archwing",
+    ancestors: [ "Item", "Mods", "Archwing" ]
   },
-  "Mods.Archwing.Melee": {
-    parent: "Mods.Archwing",
-    ancestors: [ "Item", "Mods", "Mods.Archwing" ],
-    children: null
+  {
+    name: "Melee",
+    parent: "Archwing",
+    ancestors: [ "Item", "Mods", "Archwing" ]
   },
-  "Mods.Conclave": {
+  {
+    name: "Conclave",
     parent: "Mods",
-    ancestors: [ "Item", "Mods" ],
-    children: [ "Primary", "Secondary", "Melee" ]
+    ancestors: [ "Item", "Mods" ]
   },
-  "Mods.Conclave.Primary": {
-    parent: "Mods.Conclave",
-    ancestors: [ "Item", "Mods", "Mods.Conclave" ],
-    children: null
+  {
+    name: "Primary",
+    parent: "Conclave",
+    ancestors: [ "Item", "Mods", "Conclave" ]
   },
-  "Mods.Conclave.Secondary": {
-    parent: "Mods.Conclave",
-    ancestors: [ "Item", "Mods", "Mods.Conclave" ],
-    children: null
+  {
+    name: "Secondary",
+    parent: "Conclave",
+    ancestors: [ "Item", "Mods", "Conclave" ]
   },
-  "Mods.Conclave.Melee": {
-    parent: "Mods.Conclave",
-    ancestors: [ "Item", "Mods", "Mods.Conclave" ],
-    children: null
+  {
+    name: "Melee",
+    parent: "Conclave",
+    ancestors: [ "Item", "Mods", "Conclave" ]
   },
-  "Sortie Weapons": {
+  {
+    name: "Sortie Weapons",
     parent: "Item",
-    ancestors: [ "Item" ],
-    children: null
+    ancestors: [ "Item" ]
   },
-  "Void Parts": {
+  {
+    name: "Void Parts",
     parent: "Item",
-    ancestors: [ "Item" ],
-    children: null
+    ancestors: [ "Item" ]
   },
-  Keys: {
+  {
+    name: "Keys",
     parent: "Item",
-    ancestors: [ "Item" ],
-    children: null
+    ancestors: [ "Item" ]
   },
-  Arcanes: {
+  {
+    name: "Arcanes",
     parent: "Item",
-    ancestors: [ "Item" ],
-    children: null
+    ancestors: [ "Item" ]
   }
-};
+];

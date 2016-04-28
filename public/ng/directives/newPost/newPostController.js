@@ -5,7 +5,6 @@
  * }
  * 
  * $scope.cancel = function passed in from outer scope to cancel/return
- * $scope.catModel = category hierarchy object passed from outer scope
  */
 
 module.exports = [ "$scope",
@@ -39,10 +38,8 @@ module.exports = [ "$scope",
 
   this.submitPost = function submitPost() {
     var category = this.scope.newItem.category["_id"];
-    this.scope.newItem.category.parent =
-      this.scope.catModel[category].parent;
-    this.scope.newItem.category.ancestors =
-      this.scope.catModel[category].ancestors;
+    this.scope.newItem.category.parent = null;
+    this.scope.newItem.category.ancestors = null;
 
     if (debug)
       console.log(this.scope);

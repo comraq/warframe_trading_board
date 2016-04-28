@@ -5,7 +5,7 @@ exports.root = function() {
     templateUrl: "/ng/directives/root/rootView.html",
     scope: {
       user: "=user",
-      catModel: "=catmodel"
+      children: "=children"
     }
   };
 };
@@ -17,7 +17,7 @@ exports.customNavBar = function() {
     templateUrl: "/ng/directives/customNavBar/customNavBarView.html",
     scope: {
       user: "=user",
-      catModel: "=catmodel"
+      children: "=children"
     }
   };
 };
@@ -29,7 +29,7 @@ exports.home = function() {
     templateUrl: "/ng/directives/home/homeView.html",
     scope: {
       user: "=user",
-      catModel: "=catmodel"
+      children: "=children"
     }
   };
 };
@@ -41,7 +41,7 @@ exports.modsItems = function() {
     templateUrl: "/ng/directives/modsItems/modsItemsView.html",
     scope: {
       user: "=user",
-      catModel: "=catmodel"
+      children: "=children"
     }
   };
 };
@@ -53,7 +53,7 @@ exports.modsHierarchy = function() {
     templateUrl: "/ng/directives/modsHierarchy/modsHierarchyView.html",
     scope: {
       user: "=user",
-      catModel: "=catmodel",
+      children: "=children",
       getModeLabel: "=getmodelabel",
       getTypeLabel: "=gettypelabel",
       getCompanionLabel: "=getcompanionlabel"
@@ -76,8 +76,7 @@ exports.newPost = function() {
     templateUrl: "/ng/directives/newPost/newPostView.html",
     scope: {
       newItem: "=item",
-      cancel: "=cancel",
-      catModel: "=catmodel"
+      cancel: "=cancel"
     }
   };
 };

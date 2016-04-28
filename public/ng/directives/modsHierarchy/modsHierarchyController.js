@@ -15,25 +15,18 @@ module.exports = [ "$scope", "$state", function($scope, $state) {
   };
 
   function reloadDirective() {
-    var stateParams = $state.params,
-        catModelKey = { value: "Mods" };
+    var stateParams = $state.params;
 
     switch(stateParams.level) {
       case "Mode":
-        catModelKey.value += ("." + stateParams.mode);
         nextLevel.value = "Type";
         break;
 
       case "Type":
-        catModelKey.value += ("." + stateParams.mode + "."
-                                  + stateParams.type);
         nextLevel.value = "Companion";
         break;
 
       case "Companion":
-        catModelKey.value += ("." + stateParams.mode + "."
-                                  + stateParams.type + "."
-                                  + stateParams.companion);
         nextLevel.value = "placeholderstate";
         break;
 
@@ -51,14 +44,11 @@ module.exports = [ "$scope", "$state", function($scope, $state) {
     if (debug) {
       console.log("stateParams:");
       console.log(stateParams);
-      console.log(catModelKey);
     }
 
-    $scope.options = $scope.catModel[catModelKey.value].children;
+    $scope.options = $scope.children;
 
     if (debug) {
-      console.log("catModelKey:")
-      console.log(catModelKey);
       console.log("nextLevel:");
       console.log(nextLevel);
       console.log("state:");

@@ -23,35 +23,36 @@ app.config([ "$stateProvider",
         "": { template: "<root></root>" },
         "navbar@root": {
           template: "<custom-nav-bar" + " user='userSession'"
-                                      + " catmodel='categoryHierarchy'>"
                                       + "></custom-nav-bar>",
-          controller: [ "$scope", "userSession", "categoryHierarchy",
-                        function($scope, userSession, categoryHierarchy) {
+          controller: [ "$scope", "userSession",
+                        function($scope, userSession) {
             $scope.userSession = userSession;
-            $scope.categoryHierarchy = categoryHierarchy;
           }]
         },
         "body@root": {
           template: "<home" + " user='userSession'"
-                            + " catmodel='categoryHierarchy'>"
+                            + " children='children'"
                             + "></home>",
-          controller: [ "$scope", "userSession", "categoryHierarchy",
-                        function($scope, userSession, categoryHierarchy) {
+          controller: [
+                        "$scope",
+                        "userSession",
+                        "children",
+                        function($scope,
+                                 userSession,
+                                 children) {
             $scope.userSession = userSession;
-            $scope.categoryHierarchy = categoryHierarchy;
+            $scope.children = children;
           }]
         }
       },
       resolve: {
-        userSession: [
-                       "userSessionService",
+        userSession: [ "userSessionService",
                        function(userSessionService) {
           return userSessionService.getUserSession();
         }],
-        categoryHierarchy: [
-                             "itemCategoryService",
-                             function(itemCategoryService) {
-          return itemCategoryService.getCategoryHierarchy();
+        children: [ "itemCategoryService",
+                    function(itemCategoryService, $state) {
+          return itemCategoryService.getChildren("/Item");
         }]
       },
       ncyBreadcrumb: {
@@ -67,14 +68,25 @@ app.config([ "$stateProvider",
         },
         "hierarchy@root.mods": {
           template: "<mods-hierarchy" + " user='userSession'"
-                                      + " catmodel='categoryHierarchy'"
+                                      + " children='children'"
                                       + "></mods-hierarchy>",
-          controller: [ "$scope", "userSession", "categoryHierarchy",
-                        function($scope, userSession, categoryHierarchy) {
+          controller: [
+                        "$scope",
+                        "userSession",
+                        "children",
+                        function($scope,
+                                 userSession,
+                                 children) {
             $scope.userSession = userSession;
-            $scope.categoryHierarchy = categoryHierarchy;
+            $scope.children = children;
           }]
         }
+      },
+      resolve: {
+        children: [ "itemCategoryService",
+                    function(itemCategoryService) {
+          return itemCategoryService.getChildren("/Item/Mods");
+        }]
       },
       ncyBreadcrumb: {
         label: "Mods"
@@ -88,20 +100,20 @@ app.config([ "$stateProvider",
       views: {
         "hierarchy": {
           template: "<mods-hierarchy" + " user='userSession'"
-                                      + " catmodel='categoryHierarchy'"
+                                      + " children='children'"
                                       + " getmodelabel='getModeLabel'"
                                       + "></mods-hierarchy>",
           controller: [
                         "$scope",
                         "$stateParams",
                         "userSession",
-                        "categoryHierarchy",
+                        "children",
                         function($scope,
                                  $stateParams,
                                  userSession,
-                                 categoryHierarchy) {
+                                 children) {
             $scope.userSession = userSession;
-            $scope.categoryHierarchy = categoryHierarchy;
+            $scope.children = children;
  
             $scope.getModeLabel = function() {
               return $stateParams.mode;
@@ -115,6 +127,13 @@ app.config([ "$stateProvider",
           }]
         }
       },
+      resolve: {
+        children: [ "itemCategoryService", "$stateParams",
+                    function(itemCategoryService, $stateParams) {
+          return itemCategoryService
+                   .getChildren("/Item/Mods/" + $stateParams.mode);
+        }]
+      },
       ncyBreadcrumb: {
         label: "{{ getModeLabel() }}"
       }
@@ -127,7 +146,7 @@ app.config([ "$stateProvider",
       views: {
         "hierarchy": {
           template: "<mods-hierarchy" + " user='userSession'"
-                                      + " catmodel='categoryHierarchy'"
+                                      + " children='children'"
                                       + " getmodelabel='getModeLabel'"
                                       + " gettypelabel='getTypeLabel'"
                                       + "></mods-hierarchy>",
@@ -135,13 +154,13 @@ app.config([ "$stateProvider",
                         "$scope",
                         "$stateParams",
                         "userSession",
-                        "categoryHierarchy",
+                        "children",
                         function($scope,
                                  $stateParams,
                                  userSession,
-                                 categoryHierarchy) {
+                                 children) {
             $scope.userSession = userSession;
-            $scope.categoryHierarchy = categoryHierarchy;
+            $scope.children = children;
 
             $scope.getModeLabel = function() {
               return $stateParams.mode;
@@ -155,22 +174,30 @@ app.config([ "$stateProvider",
         "items": {
           template: "<mods-items"
                       + " user='userSession'"
-                      + " catmodel='categoryHierarchy'"
+                      + " children='children'"
                       + "></mods-items>",
           controller: [
                         "$scope",
                         "userSession",
-                        "categoryHierarchy",
+                        "children",
                         function($scope,
                                  userSession,
-                                 categoryHierarchy) {
+                                 children) {
             $scope.userSession = userSession;
-            $scope.categoryHierarchy = categoryHierarchy;
+            $scope.children = children;
 
             // Must explicitly set breadcrumb ignore for multiview scopes
             $scope.ncyBreadcrumbIgnore = true;
           }]
         }
+      },
+      resolve: {
+        children: [ "itemCategoryService", "$stateParams",
+                    function(itemCategoryService, $stateParams) {
+          return itemCategoryService
+                   .getChildren("/Item/Mods/" + $stateParams.mode
+                                        + "/" + $stateParams.type);
+        }]
       },
       ncyBreadcrumb: {
         parent: "root.mods.mode",
@@ -186,7 +213,7 @@ app.config([ "$stateProvider",
         "hierarchy": {
           template: "<mods-hierarchy"
                       + " user='userSession'"
-                      + " catmodel='categoryHierarchy'"
+                      + " children='children'"
                       + " getmodelabel='getModeLabel'"
                       + " gettypelabel='getTypeLabel'"
                       + " getcompanionlabel='getCompanionLabel'"
@@ -195,13 +222,13 @@ app.config([ "$stateProvider",
                         "$scope",
                         "$stateParams",
                         "userSession",
-                        "categoryHierarchy",
+                        "children",
                         function($scope,
                                  $stateParams,
                                  userSession,
-                                 categoryHierarchy) {
+                                 children) {
             $scope.userSession = userSession;
-            $scope.categoryHierarchy = categoryHierarchy;
+            $scope.children = children;
  
             $scope.getModeLabel = function() {
               return $stateParams.mode;
@@ -219,22 +246,30 @@ app.config([ "$stateProvider",
         "items": {
           template: "<mods-items"
                       + " user='userSession'"
-                      + " catmodel='categoryHierarchy'"
+                      + " children='children'"
                       + "></mods-items>",
           controller: [
                         "$scope",
                         "userSession",
-                        "categoryHierarchy",
                         function($scope,
                                  userSession,
-                                 categoryHierarchy) {
+                                 children) {
             $scope.userSession = userSession;
-            $scope.categoryHierarchy = categoryHierarchy;
+            $scope.children = children;
 
             // Must explicitly set breadcrumb ignore for multiview scopes
             $scope.ncyBreadcrumbIgnore = true;
           }]
         }
+      },
+      resolve: {
+        children: [ "itemCategoryService", "$stateParams",
+                    function(itemCategoryService, $stateParams) {
+          return itemCategoryService
+                   .getChildren("/Item/Mods/" + $stateParams.mode
+                                        + "/" + $stateParams.type
+                                        + "/" + $stateParams.companion);
+        }]
       },
       ncyBreadcrumb: {
         parent: "root.mods.type",

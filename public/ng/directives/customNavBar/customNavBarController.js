@@ -24,11 +24,9 @@ module.exports = [ "$scope",
     var modalInstance = $uibModal.open({
       template: "<new-post" + " item='item'"
                             + " cancel='cancel'"
-                            + " catmodel='catmodel'"
                             + "></new-post>",
       controller: [ "$scope", function($scope) {
         $scope.item = item;
-        $scope.catmodel = this.scope.catModel;
         $scope.cancel = modalInstance.dismiss;
       }.bind(this)],
       // So user cannot accidentally close modal by clicking outside

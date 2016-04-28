@@ -1,5 +1,5 @@
 <!-- ng/directives/modsItems/modsItemsView.html -->
-<div ng-show="atHierarchyLeaf">
+<div ng-show="!children">
   <h3>Placeholder List of Items</h3>
   <ul ng-repeat="item in tempListItems">
     <li><a href="">{{ item }}</a></li>
