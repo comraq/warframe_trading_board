@@ -1,3 +1,6 @@
+// Include external global vendor libraries
+require("../lib/vendors");
+
 var app = angular.module("warframeTrade", [
                                             require("angular-animate"),
                                             require("angular-touch"),
