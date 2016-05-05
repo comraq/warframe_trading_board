@@ -35,6 +35,7 @@
   "devDependencies": {
     "babel-core": "*",
     "babel-preset-es2015": "*",
+    "babel-preset-stage-0": "*",
     "babelify": "*",
     "browserify": "^13.0.0",
     "chai": "^3.5.0",
