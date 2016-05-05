@@ -1,4 +1,5 @@
 module.exports = function(wagner) {
+  // Build Paths
   wagner.constant("BIN_PATH", "./public/bin");
   wagner.constant("JS_SRC", "./public/ng/app.js");
   wagner.constant("JS_SRC_GLOB", [
@@ -19,4 +20,14 @@ module.exports = function(wagner) {
                     "./public/lib/**/*.css"
                   ]);
   wagner.constant("CSS_VEND_DEST", "vendors.min.css");
+
+  // Test Paths
+  wagner.constant("TESTS_PATH", "./test/*.js");
+  wagner.constant("TESTS_SRC_JS", [
+    "./**/*.js",
+    "!./node_modules/**/*.js",
+    "!./gulpfile.js",
+    "!./gulp/**/*.js",
+    "!./test/**/*.js"
+  ]);
 };
