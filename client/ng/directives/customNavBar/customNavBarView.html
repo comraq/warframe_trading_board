@@ -1,0 +1,50 @@
+<nav class="navbar navbar-default container-fluid">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed"
+      data-toggle="collapse" data-target="#navbar"
+      aria-expanded="false" aria-controls="navbar">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" ui-sref="root">WarFrame Trading Board</a>
+  </div>
+
+  <div class="collapse navbar-collapse">
+    <form class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control"
+          placeholder="Enter Item Name">
+      </div>
+      <button type="submit" class="btn btn-default">Search</button>
+    </form>
+
+    <ul class="nav navbar-nav navbar-right">
+      <!-- Navigation when Logged Out -->
+      <li ng-if="!user">
+        <a href="" ng-click="ctrl.logIn()">Log In</a>
+      </li>
+
+      <!-- Navigation when Logged In -->
+      <li ng-if="user">
+        <div class="warframe-custom-nav-bar-user-profile">
+          Welcome, {{ user.profile.name }}
+          <img ng-src="{{ user.profile.picture }}" />
+        </div>
+      </li>
+      <li ng-if="user">
+        <a href="" ng-click="ctrl.newPost()"
+          class="warframe-custom-nav-bar-new-post-container">
+          <div class="btn btn-success">New Post!</div>
+        </a>
+      </li>
+      <li ng-if="user">
+        <a href="">Account</a>
+      </li>
+      <li ng-if="user">
+        <a href="" ng-click="ctrl.logOut()">Log Out</a>
+      </li>
+    </ul>
+  </div>
+</nav>

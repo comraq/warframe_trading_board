@@ -1,0 +1,10 @@
+.warframe-scroll-container {
+  height: 70vh;
+
+  border: 0.5px solid #ddd;
+}
+
+.warframe-scroll-content {
+  padding: 2%;
+}
+

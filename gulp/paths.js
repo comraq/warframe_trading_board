@@ -1,15 +1,15 @@
 module.exports = function(wagner) {
   // Build Paths
-  wagner.constant("BIN_PATH", "./public/bin");
-  wagner.constant("JS_SRC", "./public/ng/app.js");
+  wagner.constant("BIN_PATH", "./client/bin");
+  wagner.constant("JS_SRC", "./client/ng/app.js");
   wagner.constant("JS_SRC_GLOB", [
-                    "./public/ng/**/*.js"
+                    "./client/ng/**/*.js"
                   ]);
   wagner.constant("JS_DEST", "scripts.min.js");
   
   wagner.constant("CSS_SRC_GLOB", [
-                    "./public/assets/css/*.css",
-                    "./public/ng/**/*.css"
+                    "./client/assets/css/*.css",
+                    "./client/ng/**/*.css"
                   ]);
   wagner.constant("CSS_DEST", "styles.min.css");
   
@@ -17,9 +17,18 @@ module.exports = function(wagner) {
                     // Bootstrap
                     "./node_modules/bootstrap/dist/**/*.css",
                     // Other Angular Libraries
-                    "./public/lib/**/*.css"
+                    "./client/lib/**/*.css"
                   ]);
   wagner.constant("CSS_VEND_DEST", "vendors.min.css");
+
+  // Server JS Paths
+  wagner.constant("SERV_BASE_PATH", "./server");
+  wagner.constant("SERV_JS_SRC", "./server/index.js");
+  wagner.constant("SERV_JS_SRC_GLOB", [
+                    "./server/**/*.js",
+                    "!./server/server-transpiled.js"
+                  ]);
+  wagner.constant("SERV_JS_DEST", "server-transpiled.js");
 
   // Test Paths
   wagner.constant("TESTS_PATH", "./test/*.js");

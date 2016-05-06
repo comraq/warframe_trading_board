@@ -6,8 +6,10 @@ npm install - to install node module dependencies
 
 
 Build Scripts:     
-npm run watch - minify + browserify .js files and minify .css files or clients browsers upon any changes    
-npm run watchd - same as watch but with production flag off to include sourcemaps for minified files     
+npm run watchd - watches for src js and css changes, then auto rebuild with
+sourcemaps   
+npm run watch - watches for src js and css changes, then auto rebuild
+without sourcemaps        
 
 
 Running the server:    
