@@ -2,12 +2,12 @@
   "name": "warframe_trading_board",
   "version": "1.0.0",
   "description": "A web-app built using the MEAN stack serving as a trading board for the game, Warframe",
-  "main": "server/server-transpiled.js",
+  "main": "server-transpiled/index.js",
   "scripts": {
-    "start": "node server/server-transpiled.js",
-    "test": "gulp",
-    "watch": "gulp watch-css watchify-js minify-vendor-css watch-server-js --production",
-    "watchd": "gulp watch-css watchify-js minify-vendor-css watch-server-js"
+    "start": "node server-transpiled/index.js",
+    "test": "./node_modules/gulp/bin/gulp.js",
+    "watch": "./node_modules/gulp/bin/gulp.js watch-css watchify-js minify-vendor-css watch-server-js --production",
+    "watchd": "./node_modules/gulp/bin/gulp.js watch-css watchify-js minify-vendor-css watch-server-js"
   },
   "config": {
     "debug": false
