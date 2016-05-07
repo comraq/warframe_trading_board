@@ -1,6 +1,6 @@
 import fs from "fs";
 
-const setupDependencies = (wagner, port) => {
+export default (wagner, port) => {
   wagner.factory("Config", () => {
     let conf = JSON.parse(
                  fs.readFileSync(__dirname + "/../../config.json")
@@ -11,5 +11,3 @@ const setupDependencies = (wagner, port) => {
     return conf;
   });
 };
-
-export default setupDependencies;
