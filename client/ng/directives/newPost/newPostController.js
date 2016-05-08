@@ -38,6 +38,7 @@ module.exports = [ "$scope",
 
   this.submitPost = function submitPost() {
     var category = this.scope.newItem.category["_id"];
+    this.scope.newItem.category.name = category;
     this.scope.newItem.category.parent = null;
     this.scope.newItem.category.ancestors = null;
 

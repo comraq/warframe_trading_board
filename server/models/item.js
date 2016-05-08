@@ -1,7 +1,8 @@
-var ItemCategoryModel = require('./itemCategory'),
-    mongoose = require('mongoose');
+import mongoose from "mongoose";
 
-var itemObject = {
+import ItemCategoryModel from "./itemCategory";
+
+const itemObject = {
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -25,7 +26,7 @@ var itemObject = {
   expiry: { type: Date, required: true }
 };
 
-var transactionEnum = {
+const transactionEnum = {
   values: [
     "Deal",
     "Auction"
@@ -33,11 +34,11 @@ var transactionEnum = {
   message: "`transaction` Attribute Must Be Either 'Deal' or 'Auction'"
 };
 
-var options = {
+const options = {
   timestamps: true
 };
 
-var schema = new mongoose.Schema(itemObject, options);
+const schema = new mongoose.Schema(itemObject, options);
 schema.pre("save", function(next) {
   if (this.transaction == "Auction") {
     if (!this.bidPrice || !this.bidPrice.start)
@@ -49,4 +50,4 @@ schema.pre("save", function(next) {
   next();
 });
 
-module.exports = mongoose.model("Item", schema, "items");
+export default mongoose.model("Item", schema, "items");

@@ -1,6 +1,6 @@
-var  mongoose = require('mongoose');
+import mongoose from "mongoose";
 
-var itemCategoryObject = {
+const itemCategoryObject = {
   _id: String,
   name: { type: String, required: true },
   parent: {
@@ -11,11 +11,11 @@ var itemCategoryObject = {
   }]
 };
 
-var schema = new mongoose.Schema(itemCategoryObject);
+const schema = new mongoose.Schema(itemCategoryObject);
 schema.pre("validate", function(next) {
   // Manually set the _id based on the category name and ancestors
-  var prefix;
-  if (this.ancestors || this.ancestors.length > 0)
+  let prefix;
+  if (this.ancestors && this.ancestors.length > 0)
     prefix = this.ancestors.join(".");
 
   this._id = (prefix)? (prefix + "." + this.name) : this.name;
@@ -23,11 +23,9 @@ schema.pre("validate", function(next) {
   next();
 });
 
-module.exports = mongoose.model("ItemCategory", schema, "item-categories");
-
 // Note: A copy of the actual hierarchy tree/objects stored in
 //       the item-categories collection
-module.exports.hierarchy = [
+const hierarchy = [
   {
     name: "Item",
     parent: null,
@@ -139,3 +137,7 @@ module.exports.hierarchy = [
     ancestors: [ "Item" ]
   }
 ];
+
+export default mongoose.model("ItemCategory", schema, "item-categories");
+export { hierarchy };
+

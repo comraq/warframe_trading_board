@@ -1,11 +1,30 @@
 "use strict";
 
-var mongoose = require("mongoose"),
-    ItemCategoryModel = require("./itemCategory"),
-    ItemModel = require("./item"),
-    UserModel = require("./user");
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-module.exports = function modelsIndex(wagner) {
+var _mongoose = require("mongoose");
+
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
+var _item = require("./item");
+
+var _item2 = _interopRequireDefault(_item);
+
+var _user = require("./user");
+
+var _user2 = _interopRequireDefault(_user);
+
+var _itemCategory = require("./itemCategory");
+
+var _itemCategory2 = _interopRequireDefault(_itemCategory);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_itemCategory2.default.hierarchy = _itemCategory.hierarchy;
+
+exports.default = function (wagner) {
   wagner.invoke(function (Config) {
     var dbConfig = Config.warframeDB;
     var hostname = dbConfig.hostname || "localhost",
@@ -17,13 +36,13 @@ module.exports = function modelsIndex(wagner) {
     var userInfo = user ? user + ":" + password + "@" : "";
     var uri = "mongodb://" + userInfo + hostname + ":" + port + "/" + dbName;
 
-    mongoose.connect(uri, function (err) {
+    _mongoose2.default.connect(uri, function (err) {
       if (err) throw new Error(err);
     });
   });
 
-  wagner.factory('db', function (Config) {
-    return mongoose;
+  wagner.factory("db", function (Config) {
+    return _mongoose2.default;
   });
 
   /*
@@ -33,9 +52,9 @@ module.exports = function modelsIndex(wagner) {
    *       Then, loop through each one and add them to wagner as a service
    */
   var models = {
-    ItemCategory: ItemCategoryModel,
-    Item: ItemModel,
-    User: UserModel
+    ItemCategory: _itemCategory2.default,
+    Item: _item2.default,
+    User: _user2.default
   };
 
   // DRY, register factories/servies in a loop

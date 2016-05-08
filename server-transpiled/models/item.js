@@ -1,11 +1,22 @@
-'use strict';
+"use strict";
 
-var ItemCategoryModel = require('./itemCategory'),
-    mongoose = require('mongoose');
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _mongoose = require("mongoose");
+
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
+var _itemCategory = require("./itemCategory");
+
+var _itemCategory2 = _interopRequireDefault(_itemCategory);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var itemObject = {
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: _mongoose2.default.Schema.Types.ObjectId,
     ref: "User"
   },
   name: { type: String, required: true },
@@ -23,7 +34,7 @@ var itemObject = {
     start: { type: Number },
     current: { type: Number }
   },
-  category: ItemCategoryModel.schema,
+  category: _itemCategory2.default.schema,
   expiry: { type: Date, required: true }
 };
 
@@ -36,7 +47,7 @@ var options = {
   timestamps: true
 };
 
-var schema = new mongoose.Schema(itemObject, options);
+var schema = new _mongoose2.default.Schema(itemObject, options);
 schema.pre("save", function (next) {
   if (this.transaction == "Auction") {
     if (!this.bidPrice || !this.bidPrice.start) return next(new Error("Bid Price Not Set for Auction Item!"));else this.bidPrice.current = this.bidPrice.start;
@@ -45,4 +56,4 @@ schema.pre("save", function (next) {
   next();
 });
 
-module.exports = mongoose.model("Item", schema, "items");
+exports.default = _mongoose2.default.model("Item", schema, "items");

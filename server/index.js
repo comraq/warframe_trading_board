@@ -11,7 +11,9 @@ wagner.constant("app", app);
 import setupDependencies from "./config/dependencies";
 setupDependencies(wagner, port);
 
-require("./models")(wagner);
+//require("./models")(wagner);
+import setupModels from "./models";
+setupModels(wagner);
 
 require("./auth")(wagner);
 

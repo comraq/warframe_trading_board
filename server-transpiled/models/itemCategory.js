@@ -1,6 +1,15 @@
 "use strict";
 
-var mongoose = require('mongoose');
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.hierarchy = undefined;
+
+var _mongoose = require("mongoose");
+
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var itemCategoryObject = {
   _id: String,
@@ -13,22 +22,20 @@ var itemCategoryObject = {
   }]
 };
 
-var schema = new mongoose.Schema(itemCategoryObject);
+var schema = new _mongoose2.default.Schema(itemCategoryObject);
 schema.pre("validate", function (next) {
   // Manually set the _id based on the category name and ancestors
-  var prefix;
-  if (this.ancestors || this.ancestors.length > 0) prefix = this.ancestors.join(".");
+  var prefix = void 0;
+  if (this.ancestors && this.ancestors.length > 0) prefix = this.ancestors.join(".");
 
   this._id = prefix ? prefix + "." + this.name : this.name;
 
   next();
 });
 
-module.exports = mongoose.model("ItemCategory", schema, "item-categories");
-
 // Note: A copy of the actual hierarchy tree/objects stored in
 //       the item-categories collection
-module.exports.hierarchy = [{
+var hierarchy = [{
   name: "Item",
   parent: null,
   ancestors: []
@@ -117,3 +124,6 @@ module.exports.hierarchy = [{
   parent: "Item",
   ancestors: ["Item"]
 }];
+
+exports.default = _mongoose2.default.model("ItemCategory", schema, "item-categories");
+exports.hierarchy = hierarchy;

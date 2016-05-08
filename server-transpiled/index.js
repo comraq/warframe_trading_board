@@ -16,6 +16,10 @@ var _dependencies = require("./config/dependencies");
 
 var _dependencies2 = _interopRequireDefault(_dependencies);
 
+var _models = require("./models");
+
+var _models2 = _interopRequireDefault(_models);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
@@ -27,7 +31,9 @@ _wagnerCore2.default.constant("app", app);
 
 (0, _dependencies2.default)(_wagnerCore2.default, port);
 
-require("./models")(_wagnerCore2.default);
+//require("./models")(wagner);
+
+(0, _models2.default)(_wagnerCore2.default);
 
 require("./auth")(_wagnerCore2.default);
 

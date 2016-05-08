@@ -1,6 +1,6 @@
-var mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-var userObject = {
+const userObject = {
   profile: {
     name: {
       type: String,
@@ -17,5 +17,5 @@ var userObject = {
   }
 };
 
-var schema = new mongoose.Schema(userObject);
-module.exports = mongoose.model("User", schema, "users");
+const schema = new mongoose.Schema(userObject);
+export default mongoose.model("User", schema, "users");
