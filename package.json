@@ -4,10 +4,12 @@
   "description": "A web-app built using the MEAN stack serving as a trading board for the game, Warframe",
   "main": "server-transpiled/index.js",
   "scripts": {
-    "start": "node server-transpiled/index.js",
+    "start": "node server-transpiled/index.js 7777",
     "test": "./node_modules/gulp/bin/gulp.js",
-    "watch": "./node_modules/gulp/bin/gulp.js watch-css watchify-js minify-vendor-css watch-server-js --production",
-    "watchd": "./node_modules/gulp/bin/gulp.js watch-css watchify-js minify-vendor-css watch-server-js"
+    "build": "./node_modules/gulp/bin/gulp.js build-all --production",
+    "buildd": "./node_modules/gulp/bin/gulp.js build-all",
+    "watchd": "./node_modules/gulp/bin/gulp.js watch-all",
+    "watchr": "./node_modules/gulp/bin/gulp.js watch-reload --host=localhost --port=7777"
   },
   "config": {
     "debug": false
@@ -36,6 +38,7 @@
     "babel-core": "*",
     "babel-preset-es2015": "*",
     "babelify": "*",
+    "browser-sync": "*",
     "browserify": "*",
     "chai": "*",
     "gulp": "*",

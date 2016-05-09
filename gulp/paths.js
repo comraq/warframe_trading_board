@@ -1,5 +1,5 @@
 module.exports = function(wagner) {
-  // Build Paths
+  // Client JS Paths
   wagner.constant("BIN_PATH", "./client/bin");
   wagner.constant("JS_SRC", "./client/ng/app.js");
   wagner.constant("JS_SRC_GLOB", [
@@ -7,6 +7,7 @@ module.exports = function(wagner) {
                   ]);
   wagner.constant("JS_DEST", "scripts.min.js");
   
+  // Client CSS Paths
   wagner.constant("CSS_SRC_GLOB", [
                     "./client/assets/css/*.css",
                     "./client/ng/**/*.css"
