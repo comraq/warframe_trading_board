@@ -1,12 +1,12 @@
-var SteamStrategy = require("passport-steam").Strategy;
+import { Strategy as SteamStrategy } from "passport-steam";
 
-module.exports = function steamStrategy(User, Config, app, passport) {
-  var strategy = new SteamStrategy({
+export default (User, Config, app, passport) => {
+  const strategy = new SteamStrategy({
     returnURL: Config.server.authority + Config.steamAuth.callbackUrl,
     realm: Config.server.authority,
     apiKey: Config.steamAuth.apiKey
   },
-  function(identifier, profile, done) {
+  (identifier, profile, done) => {
     if (!profile.displayName || !profile.displayName.length)
       return done("No name associated with this account!");
 
@@ -25,9 +25,7 @@ module.exports = function steamStrategy(User, Config, app, passport) {
         }
       },
       { "new": true, upsert: true, runValidators: true },
-      function(error, user) {
-        done(error, user);
-      });
+      (error, user) => done(error, user));
   });
 
   // Express routes for auth

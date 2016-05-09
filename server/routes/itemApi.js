@@ -1,24 +1,25 @@
-var express = require("express"),
-    httpStatus = require("http-status"),
-    api = express.Router();
+import express from "express";
+import httpStatus from "http-status";
 
-module.exports = function itemApi(Item, ItemCategory) {
-  api.post("/new", function newItem(req, res) {
+export default (Item, ItemCategory) => {
+  const api = express.Router();
+
+  api.post("/new", (req, res) => {
     // TODO: Need to add proper/meaningful api response for this route
     if (process.env.npm_package_config_debug == "true") {
       console.log("itemApi: newItem");
       console.log(JSON.stringify(req.body, null, 2));
     }
 
-    var item = new Item(req.body);
-    item.save().then(function success(result) {
+    let item = new Item(req.body);
+    item.save().then(result => {
       if (process.env.npm_package_config_debug == "true") {
         console.log("\nsuccess!");
         console.log(JSON.stringify(result, null, 2));
       }
       res.end();
 
-    }, function error(err) {
+    }, err => {
       console.log("\nerror!");
       console.log(err);
 

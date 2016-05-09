@@ -1,12 +1,14 @@
-var passport = require("passport");
+import passport from "passport";
+import facebookStrategy from "./facebookStrategy";
+import steamStrategy from "./steamStrategy";
 
-module.exports = function authIndex(wagner) {
+export default wagner => {
   wagner.invoke(require("./passportConfig"), { passport: passport });
 
-  passport.use(wagner.invoke(require("./facebookStrategy"), {
+  passport.use(wagner.invoke(facebookStrategy, {
                  passport: passport
                }));
-  passport.use(wagner.invoke(require("./steamStrategy"), {
+  passport.use(wagner.invoke(steamStrategy, {
                  passport: passport
                }));
 };

@@ -1,14 +1,30 @@
 "use strict";
 
-var passport = require("passport");
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-module.exports = function authIndex(wagner) {
-  wagner.invoke(require("./passportConfig"), { passport: passport });
+var _passport = require("passport");
 
-  passport.use(wagner.invoke(require("./facebookStrategy"), {
-    passport: passport
+var _passport2 = _interopRequireDefault(_passport);
+
+var _facebookStrategy = require("./facebookStrategy");
+
+var _facebookStrategy2 = _interopRequireDefault(_facebookStrategy);
+
+var _steamStrategy = require("./steamStrategy");
+
+var _steamStrategy2 = _interopRequireDefault(_steamStrategy);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (wagner) {
+  wagner.invoke(require("./passportConfig"), { passport: _passport2.default });
+
+  _passport2.default.use(wagner.invoke(_facebookStrategy2.default, {
+    passport: _passport2.default
   }));
-  passport.use(wagner.invoke(require("./steamStrategy"), {
-    passport: passport
+  _passport2.default.use(wagner.invoke(_steamStrategy2.default, {
+    passport: _passport2.default
   }));
 };

@@ -2,23 +2,23 @@ import express from "express";
 import morgan from "morgan";
 import wagner from "wagner-core";
 
+import setupDependencies from "./config/dependencies";
+import setupModels from "./models";
+import setupAuth from "./auth";
+import setupRoutes from "./routes";
+
 const app = express();
 let port = process.argv[2] || process.env.PORT || 80;
 
 wagner.constant("app", app);
 
-// Dependencies must be required before the others!
-import setupDependencies from "./config/dependencies";
+// Dependencies must be setup before the others!
 setupDependencies(wagner, port);
-
-//require("./models")(wagner);
-import setupModels from "./models";
 setupModels(wagner);
-
-require("./auth")(wagner);
+setupAuth(wagner);
 
 app.use(morgan("dev"));
-app.use("/api", require("./routes")(wagner));
+app.use("/api", setupRoutes(wagner));
 
 // For boostrap fonts
 app.use("/fonts", express.static(__dirname

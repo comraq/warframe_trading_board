@@ -1,7 +1,7 @@
-var FacebookStrategy = require("passport-facebook").Strategy;
+import { Strategy as FacebookStrategy } from "passport-facebook";
 
-module.exports = function facebookStrategy(User, Config, app, passport) {
-  var strategy = new FacebookStrategy({
+export default (User, Config, app, passport) => {
+  const strategy = new FacebookStrategy({
     clientID: Config.facebookAuth.clientId,
     clientSecret: Config.facebookAuth.clientSecret,
     callbackURL: Config.server.authority
@@ -9,8 +9,8 @@ module.exports = function facebookStrategy(User, Config, app, passport) {
     // Necessary for new version of Facebook graph API
     profileFields: [ "id", "name" ]
   },
-  function(accessToken, refreshToken, profile, done) {
-    var name;
+  (accessToken, refreshToken, profile, done) => {
+    let name;
     if ((!profile.name.givenName || !profile.name.givenName.length)
         &&
         (!profile.name.familyName || !profile.name.familyName.length))
@@ -44,9 +44,7 @@ module.exports = function facebookStrategy(User, Config, app, passport) {
         }
       },
       { "new": true, upsert: true, runValidators: true },
-      function(error, user) {
-        done(error, user);
-      });
+      (error, user) => done(error, user));
   });
 
   // Express routes for auth

@@ -1,9 +1,13 @@
 "use strict";
 
-var SteamStrategy = require("passport-steam").Strategy;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-module.exports = function steamStrategy(User, Config, app, passport) {
-  var strategy = new SteamStrategy({
+var _passportSteam = require("passport-steam");
+
+exports.default = function (User, Config, app, passport) {
+  var strategy = new _passportSteam.Strategy({
     returnURL: Config.server.authority + Config.steamAuth.callbackUrl,
     realm: Config.server.authority,
     apiKey: Config.steamAuth.apiKey
@@ -22,7 +26,7 @@ module.exports = function steamStrategy(User, Config, app, passport) {
         "profile.picture": profile.photos[2].value
       }
     }, { "new": true, upsert: true, runValidators: true }, function (error, user) {
-      done(error, user);
+      return done(error, user);
     });
   });
 
