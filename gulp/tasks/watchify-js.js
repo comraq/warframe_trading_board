@@ -11,7 +11,7 @@ module.exports = function(plugins, transformedInst, minifyJs) {
       var magenta = plugins.util.colors.magenta;
 
       var arg = arguments[0].replace(/\((.*)\)/, "(" + magenta("$1") + ")");
-      var msg = "Finished '" + cyan("watchify-js(native)") + "' " + arg;
+      var msg = "Finished '" + cyan("watchify-js(bundle)") + "' " + arg;
       return plugins.util.log(msg);
     });
 

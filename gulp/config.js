@@ -22,8 +22,7 @@ module.exports = function(wagner) {
       entries: [ JS_SRC ],
       cache: {},
       packageCache: {},
-      poll: 100,
-      debug: true
+      poll: 100
     };
     return browserify(options).transform(babelify);
   });
