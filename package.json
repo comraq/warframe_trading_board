@@ -11,6 +11,22 @@
     "watchd": "./node_modules/gulp/bin/gulp.js watch-all",
     "watchr": "./node_modules/gulp/bin/gulp.js watch-reload --host=localhost --port=7777"
   },
+  "browser": {
+    "bootstrap": "./client/vendors/bootstrap.js",
+    "jquery": "./client/vendors/jquery.js"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "bootstrap": {
+      "depends": [
+        "jquery:jQuery"
+      ]
+    }
+  },
   "config": {
     "debug": false
   },
@@ -39,6 +55,7 @@
     "babel-preset-es2015": "*",
     "babelify": "*",
     "browser-sync": "*",
+    "browserify-shim": "*",
     "browserify": "*",
     "chai": "*",
     "gulp": "*",

@@ -1,9 +1,8 @@
-// Include external global vendor libraries
-require("../lib/vendors");
+// External dependencies included in client/vendors/scripts.js !
 
 var app = angular.module("warframeTrade", [
-                                            require("angular-animate"),
-                                            require("angular-touch"),
+                                            "ngAnimate",
+                                            "ngTouch",
                                             "ui.bootstrap",
                                             "ui.router",
                                             "ncy-angular-breadcrumb",

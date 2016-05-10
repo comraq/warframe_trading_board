@@ -7,6 +7,9 @@ module.exports = function(wagner) {
                   ]);
   wagner.constant("JS_DEST", "scripts.min.js");
   
+  wagner.constant("JS_VEND_SRC", "./client/vendors/scripts.js");
+  wagner.constant("JS_VEND_DEST", "vendors.min.js");
+
   // Client CSS Paths
   wagner.constant("CSS_SRC_GLOB", [
                     "./client/assets/css/*.css",
@@ -18,9 +21,12 @@ module.exports = function(wagner) {
                     // Bootstrap
                     "./node_modules/bootstrap/dist/**/*.css",
                     // Other Angular Libraries
-                    "./client/lib/**/*.css"
+                    "./client/vendors/**/*.css"
                   ]);
   wagner.constant("CSS_VEND_DEST", "vendors.min.css");
+
+  // Client HTML Paths
+  wagner.constant("HTML_SRC_GLOB", "./client/**/*.html");
 
   // Server JS Paths
   wagner.constant("SERV_BASE_PATH", "./server-transpiled");

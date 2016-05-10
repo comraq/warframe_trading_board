@@ -5,6 +5,14 @@ module.exports = function(wagner) {
     });
   });
 
+  // List of external vendor dependencies
+  wagner.factory("vendorDeps", function() {
+    return [
+      "jquery",
+      "bootstrap"
+    ];
+  });
+
   wagner.factory("getTask", function() {
     return getTask;
   });
@@ -14,7 +22,7 @@ module.exports = function(wagner) {
   });
 
   // A transformed browserify instance with all options/pluggins set
-  wagner.factory("transformedInst", function(JS_SRC) {
+  wagner.factory("transformedInst", function(JS_SRC, vendorDeps) {
     var browserify = require("browserify"),
         babelify = require("babelify");
 
@@ -24,7 +32,13 @@ module.exports = function(wagner) {
       packageCache: {},
       poll: 100
     };
-    return browserify(options).transform(babelify);
+    var b = browserify(options);
+
+    // Externalize the vendor require/imports from source code
+    // and require them from a separate bundle
+    vendorDeps.forEach(function(dep) { b.external(dep); });
+
+    return b.transform(babelify);
   });
 
   // Client js build function, also === "minify-js" gulp task

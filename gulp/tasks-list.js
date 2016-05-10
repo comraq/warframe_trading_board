@@ -1,11 +1,13 @@
 module.exports = function(gulp, getTask, getTest) {
   gulp.task("build-all", [
+                           "minify-vendor-js",
                            "minify-vendor-css",
                            "minify-css",
                            "minify-js",
                            "minify-server-js"
                          ]);
   gulp.task("watch-all", [
+                           "minify-vendor-js",
                            "minify-vendor-css",
                            "minify-css",
                            "watch-css",
@@ -21,6 +23,7 @@ module.exports = function(gulp, getTask, getTest) {
   gulp.task("watchify-js", getTask("watchify-js"));
   gulp.task("minify-js", getTask("minify-js"));
 
+  gulp.task("minify-vendor-js", getTask("minify-vendor-js"));
   gulp.task("minify-vendor-css", getTask("minify-vendor-css"));
 
   // Sub Tasks (Server)

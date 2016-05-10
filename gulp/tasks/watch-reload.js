@@ -1,7 +1,7 @@
 var browserSync = require("browser-sync"),
     assert = require("assert");
 
-module.exports = function(gulp, plugins, BIN_PATH) {
+module.exports = function(gulp, plugins, BIN_PATH, HTML_SRC_GLOB) {
   var host = plugins.util.env.host || false,
       port = plugins.util.env.port || false;
 
@@ -16,6 +16,7 @@ module.exports = function(gulp, plugins, BIN_PATH) {
     var instance = browserSync.create();
     instance.init(options);
 
-    return gulp.watch(BIN_PATH + "/**/*").on("change", instance.reload);
+    return gulp.watch([ BIN_PATH + "/**/*", HTML_SRC_GLOB ])
+             .on("change", instance.reload);
   };
 };
