@@ -1,20 +1,25 @@
-// External dependencies included in client/vendors/scripts.js !
+// External dependencies included in client/vendors/scripts.js!
+import warframeDirectives from "./directives";
+import warframeServices from "./services";
 
-var app = angular.module("warframeTrade", [
+//var app = angular.module("warframeTrade", [
+const app = angular.module("warframeTrade", [
                                             "ngAnimate",
                                             "ngTouch",
                                             "ui.bootstrap",
                                             "ui.router",
                                             "ncy-angular-breadcrumb",
                                             "ngScrollable",
-                                            require("./directives"),
-                                            require("./services")
+                                            //require("./directives"),
+                                            //require("./services")
+                                            warframeDirectives,
+                                            warframeServices
                                           ]);
-var debug = false;
+const debug = false;
 
 app.config([ "$stateProvider",
              "$urlRouterProvider",
-             function($stateProvider, $urlRouterProvider) {
+             ($stateProvider, $urlRouterProvider) => {
   $urlRouterProvider
     .otherwise("/home");
 
@@ -27,7 +32,7 @@ app.config([ "$stateProvider",
           template: "<custom-nav-bar" + " user='userSession'"
                                       + "></custom-nav-bar>",
           controller: [ "$scope", "userSession",
-                        function($scope, userSession) {
+                        ($scope, userSession) => {
             $scope.userSession = userSession;
           }]
         },
@@ -39,9 +44,9 @@ app.config([ "$stateProvider",
                         "$scope",
                         "userSession",
                         "children",
-                        function($scope,
-                                 userSession,
-                                 children) {
+                        ($scope,
+                         userSession,
+                         children) => {
             $scope.userSession = userSession;
             $scope.children = children;
           }]
@@ -49,13 +54,13 @@ app.config([ "$stateProvider",
       },
       resolve: {
         userSession: [ "userSessionService",
-                       function(userSessionService) {
-          return userSessionService.getUserSession();
-        }],
+                       (userSessionService) =>
+          userSessionService.getUserSession()
+        ],
         children: [ "itemCategoryService",
-                    function(itemCategoryService, $state) {
-          return itemCategoryService.getChildren("/Item");
-        }]
+                    (itemCategoryService, $state) =>
+          itemCategoryService.getChildren("/Item")
+        ]
       },
       ncyBreadcrumb: {
         label: "Home"
@@ -76,9 +81,9 @@ app.config([ "$stateProvider",
                         "$scope",
                         "userSession",
                         "children",
-                        function($scope,
-                                 userSession,
-                                 children) {
+                        ($scope,
+                         userSession,
+                         children) => {
             $scope.userSession = userSession;
             $scope.children = children;
           }]
@@ -86,9 +91,9 @@ app.config([ "$stateProvider",
       },
       resolve: {
         children: [ "itemCategoryService",
-                    function(itemCategoryService) {
-          return itemCategoryService.getChildren("/Item/Mods");
-        }]
+                    (itemCategoryService) =>
+          itemCategoryService.getChildren("/Item/Mods")
+        ]
       },
       ncyBreadcrumb: {
         label: "Mods"
@@ -110,20 +115,18 @@ app.config([ "$stateProvider",
                         "$stateParams",
                         "userSession",
                         "children",
-                        function($scope,
-                                 $stateParams,
-                                 userSession,
-                                 children) {
+                        ($scope,
+                         $stateParams,
+                         userSession,
+                         children) => {
             $scope.userSession = userSession;
             $scope.children = children;
  
-            $scope.getModeLabel = function() {
-              return $stateParams.mode;
-            };
+            $scope.getModeLabel = () => $stateParams.mode;
           }]
         },
         "items": {
-          controller: [ "$scope", function($scope) {
+          controller: [ "$scope", ($scope) => {
             // Must explicitly set breadcrumb ignore for multiview scopes
             $scope.ncyBreadcrumbIgnore = true;
           }]
@@ -131,10 +134,10 @@ app.config([ "$stateProvider",
       },
       resolve: {
         children: [ "itemCategoryService", "$stateParams",
-                    function(itemCategoryService, $stateParams) {
-          return itemCategoryService
-                   .getChildren("/Item/Mods/" + $stateParams.mode);
-        }]
+                    (itemCategoryService, $stateParams) =>
+          itemCategoryService
+            .getChildren("/Item/Mods/" + $stateParams.mode)
+        ]
       },
       ncyBreadcrumb: {
         label: "{{ getModeLabel() }}"
@@ -157,20 +160,16 @@ app.config([ "$stateProvider",
                         "$stateParams",
                         "userSession",
                         "children",
-                        function($scope,
-                                 $stateParams,
-                                 userSession,
-                                 children) {
+                        ($scope,
+                         $stateParams,
+                         userSession,
+                         children) => {
             $scope.userSession = userSession;
             $scope.children = children;
 
-            $scope.getModeLabel = function() {
-              return $stateParams.mode;
-            };
+            $scope.getModeLabel = () => $stateParams.mode;
 
-            $scope.getTypeLabel = function() {
-              return $stateParams.type;
-            };
+            $scope.getTypeLabel = () => $stateParams.type;
           }]
         },
         "items": {
@@ -182,9 +181,9 @@ app.config([ "$stateProvider",
                         "$scope",
                         "userSession",
                         "children",
-                        function($scope,
-                                 userSession,
-                                 children) {
+                        ($scope,
+                         userSession,
+                         children) => {
             $scope.userSession = userSession;
             $scope.children = children;
 
@@ -195,11 +194,11 @@ app.config([ "$stateProvider",
       },
       resolve: {
         children: [ "itemCategoryService", "$stateParams",
-                    function(itemCategoryService, $stateParams) {
-          return itemCategoryService
-                   .getChildren("/Item/Mods/" + $stateParams.mode
-                                        + "/" + $stateParams.type);
-        }]
+                    (itemCategoryService, $stateParams) =>
+          itemCategoryService
+            .getChildren("/Item/Mods/" + $stateParams.mode
+                                 + "/" + $stateParams.type)
+        ]
       },
       ncyBreadcrumb: {
         parent: "root.mods.mode",
@@ -225,24 +224,18 @@ app.config([ "$stateProvider",
                         "$stateParams",
                         "userSession",
                         "children",
-                        function($scope,
-                                 $stateParams,
-                                 userSession,
-                                 children) {
+                        ($scope,
+                         $stateParams,
+                         userSession,
+                         children) => {
             $scope.userSession = userSession;
             $scope.children = children;
  
-            $scope.getModeLabel = function() {
-              return $stateParams.mode;
-            };
+            $scope.getModeLabel = () => $stateParams.mode;
 
-            $scope.getTypeLabel = function() {
-              return $stateParams.type;
-            };
+            $scope.getTypeLabel = () => $stateParams.type;
 
-            $scope.getCompanionLabel = function() {
-              return $stateParams.companion;
-            };
+            $scope.getCompanionLabel = () => $stateParams.companion;
           }]
         },
         "items": {
@@ -253,9 +246,9 @@ app.config([ "$stateProvider",
           controller: [
                         "$scope",
                         "userSession",
-                        function($scope,
-                                 userSession,
-                                 children) {
+                        ($scope,
+                         userSession,
+                         children) => {
             $scope.userSession = userSession;
             $scope.children = children;
 
@@ -266,12 +259,12 @@ app.config([ "$stateProvider",
       },
       resolve: {
         children: [ "itemCategoryService", "$stateParams",
-                    function(itemCategoryService, $stateParams) {
-          return itemCategoryService
-                   .getChildren("/Item/Mods/" + $stateParams.mode
-                                        + "/" + $stateParams.type
-                                        + "/" + $stateParams.companion);
-        }]
+                    (itemCategoryService, $stateParams) =>
+          itemCategoryService
+            .getChildren("/Item/Mods/" + $stateParams.mode
+                                 + "/" + $stateParams.type
+                                 + "/" + $stateParams.companion)
+        ]
       },
       ncyBreadcrumb: {
         parent: "root.mods.type",
@@ -285,12 +278,12 @@ app.run([
           "$state",
           "$stateParams",
           "$urlRouter",
-          function ($rootScope, $state, $stateParams, $urlRouter) {
+          ($rootScope, $state, $stateParams, $urlRouter) => {
   $rootScope.$state = $state;
   $rootScope.$stateParams = $stateParams;
 
-  $rootScope.$on("$stateChangeStart", function(evt, toState, toParams,
-                                               fromState, fromParams) {
+  $rootScope.$on("$stateChangeStart", (evt, toState, toParams,
+                                       fromState, fromParams) => {
     if (debug) {
       console.log("state change start:");
       console.log("from state:");

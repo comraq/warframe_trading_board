@@ -42,10 +42,13 @@
     "body-parser": "*",
     "bootstrap": "*",
     "express": "*",
+    "express-session": "*",
     "http-status": "*",
     "jquery": "*",
     "mongoose": "*",
     "morgan": "*",
+    "passport": "*",
+    "passport-facebook": "*",
     "passport-steam": "*",
     "superagent": "*",
     "wagner-core": "*"
