@@ -1,4 +1,5 @@
-module.exports = function(gulp, getTask, getTest) {
+export default (gulp, getTask, getTest) => {
+  // Top level compilation of sub-tasks
   gulp.task("build-all", [
                            "minify-vendor-js",
                            "minify-vendor-css",

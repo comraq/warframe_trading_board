@@ -1,61 +1,53 @@
-module.exports = function(wagner) {
-  wagner.factory("plugins", function() {
-    return require("gulp-load-plugins")({
-      rename: { "gulp-clean-css": "cleanCSS" }
-    });
-  });
+import plugins from "gulp-load-plugins";
+import browserify from "browserify";
+import babelify from "babelify";
+import buffer from "vinyl-buffer";
+import source from "vinyl-source-stream";
+
+export default wagner => {
+  wagner.factory("plugins", () => plugins({
+    rename: { "gulp-clean-css": "cleanCSS" }
+  }));
 
   // List of external vendor dependencies
-  wagner.factory("vendorDeps", function() {
-    return [
-      "jquery",
-      "bootstrap"
-    ];
-  });
+  wagner.factory("vendorDeps", () => [
+    "jquery",
+    "bootstrap"
+  ]);
 
-  wagner.factory("getTask", function() {
-    return getTask;
-  });
-
-  wagner.factory("getTest", function() {
-    return getTest;
-  });
+  wagner.factory("getTask", () => getTask);
+  wagner.factory("getTest", () => getTest);
 
   // A transformed browserify instance with all options/pluggins set
-  wagner.factory("transformedInst", function(JS_SRC, vendorDeps) {
-    var browserify = require("browserify"),
-        babelify = require("babelify");
-
-    var options = {
+  wagner.factory("transformedInst", (JS_SRC, vendorDeps) => {
+    const options = {
       entries: [ JS_SRC ],
       cache: {},
       packageCache: {},
       poll: 100,
       delay: 0
     };
-    var b = browserify(options);
+
+    const b = browserify(options);
 
     // Externalize the vendor require/imports from source code
     // and require them from a separate bundle
-    vendorDeps.forEach(function(dep) { b.external(dep); });
+    vendorDeps.forEach(dep => b.external(dep));
 
     return b.transform(babelify);
   });
 
   // Client js build function, also === "minify-js" gulp task
   // Needed as a dependency due to watchify
-  wagner.factory("minifyJs", function(gulp, plugins,
-                                      JS_DEST, BIN_PATH, transformedInst) {
-    var buffer = require("vinyl-buffer"),
-        source = require("vinyl-source-stream");
-
-    return function(browserifyInst) {
-      var instance = browserifyInst || transformedInst,
-          production = plugins.util.env.production || false;
+  wagner.factory("minifyJs", (gulp, plugins,
+                              JS_DEST, BIN_PATH, transformedInst) =>
+    browserifyInst => {
+      let instance = browserifyInst || transformedInst;
+      let production = plugins.util.env.production || false;
 
       return instance
         .bundle()
-        .on("error", function(err) {
+        .on("error", err => {
           plugins.util.log(err);
           this.emit("end");
         })
@@ -70,14 +62,14 @@ module.exports = function(wagner) {
         .pipe((!production)?
                 plugins.sourcemaps.write() : plugins.util.noop())
         .pipe(gulp.dest(BIN_PATH));
-    };
-  });
+    }
+  );
 
   // Log the status of production flag
-  wagner.invoke(function(plugins) {
-    var production = plugins.util.env.production || false;
+  wagner.invoke(plugins => {
+    let production = plugins.util.env.production || false;
 
-    var colour = (production)?
+    let colour = (production)?
                    plugins.util.colors.bgGreen
                  :
                    plugins.util.colors.bgYellow;
@@ -86,13 +78,9 @@ module.exports = function(wagner) {
   });
 
   // Get task utility functions
-  var gulpTasksDir = "./tasks/";
-  function getTask(task) {
-    return wagner.invoke(require(gulpTasksDir + task));
-  }
+  const gulpTasksDir = "./tasks/";
+  const getTask = task => wagner.invoke(require(gulpTasksDir + task));
 
-  var gulpTestsDir = "./tests/";
-  function getTest(test) {
-    return wagner.invoke(require(gulpTestsDir + test));
-  }
+  const gulpTestsDir = "./tests/";
+  const getTest = test => wagner.invoke(require(gulpTestsDir + test));
 };

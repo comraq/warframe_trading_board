@@ -1,4 +1,4 @@
-module.exports = function(wagner) {
+export default wagner => {
   // Client JS Paths
   wagner.constant("BIN_PATH", "./client/bin");
   wagner.constant("JS_SRC", "./client/ng/app.js");
