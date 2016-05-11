@@ -30,7 +30,8 @@ module.exports = function(wagner) {
       entries: [ JS_SRC ],
       cache: {},
       packageCache: {},
-      poll: 100
+      poll: 100,
+      delay: 0
     };
     var b = browserify(options);
 
