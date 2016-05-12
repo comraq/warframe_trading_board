@@ -1,8 +1,9 @@
-(function warframeServices(angular) {
-  var warframeServices = angular.module("warframeServices", []);
+import * as services from "./services";
 
-  var services = require("./services");
-  for (var name in services)
+(angular => {
+  const warframeServices = angular.module("warframeServices", []);
+
+  for (let name in services)
     warframeServices.service(name, services[name]);
 
 })(window.angular);

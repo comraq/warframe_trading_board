@@ -1,5 +1,6 @@
-module.exports = [ "$scope",
-                   function($scope) {
+const rootController = [ "$scope", function($scope) {
   $scope.ctrl = this;
   this.scope = $scope
 }];
+
+export default rootController;

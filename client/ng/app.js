@@ -2,7 +2,6 @@
 import warframeDirectives from "./directives";
 import warframeServices from "./services";
 
-//var app = angular.module("warframeTrade", [
 const app = angular.module("warframeTrade", [
                                             "ngAnimate",
                                             "ngTouch",
@@ -10,8 +9,6 @@ const app = angular.module("warframeTrade", [
                                             "ui.router",
                                             "ncy-angular-breadcrumb",
                                             "ngScrollable",
-                                            //require("./directives"),
-                                            //require("./services")
                                             warframeDirectives,
                                             warframeServices
                                           ]);

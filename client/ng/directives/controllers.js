@@ -1,20 +1,30 @@
-exports.rootController =
-  require("./root/rootController.js");
+import rootController
+  from "./root/rootController";
 
-exports.customNavBarController =
-  require("./customNavBar/customNavBarController.js");
+import customNavBarController
+  from "./customNavBar/customNavBarController";
 
-exports.homeController =
-  require("./home/homeController.js");
+import homeController
+  from "./home/homeController";
 
-exports.modsItemsController =
-  require("./modsItems/modsItemsController.js");
+import modsItemsController
+  from "./modsItems/modsItemsController";
 
-exports.modsHierarchyController =
-  require("./modsHierarchy/modsHierarchyController.js");
+import modsHierarchyController
+  from "./modsHierarchy/modsHierarchyController";
 
-exports.logInController =
-  require("./logIn/logInController.js");
+import logInController
+  from "./logIn/logInController";
 
-exports.newPostController =
-  require("./newPost/newPostController.js");
+import newPostController
+  from "./newPost/newPostController";
+
+export {
+  rootController,
+  customNavBarController,
+  homeController,
+  modsItemsController,
+  modsHierarchyController,
+  logInController,
+  newPostController
+}

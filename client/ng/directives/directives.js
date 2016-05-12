@@ -1,4 +1,4 @@
-exports.root = function() {
+const root = () => {
   return {
     restrict: "AE",
     controller: "rootController",
@@ -10,7 +10,7 @@ exports.root = function() {
   };
 };
 
-exports.customNavBar = function() {
+const customNavBar = () => {
   return {
     restrict: "AE",
     controller: "customNavBarController",
@@ -22,7 +22,7 @@ exports.customNavBar = function() {
   };
 };
 
-exports.home = function() {
+const home = () => {
   return {
     restrict: "AE",
     controller: "homeController",
@@ -34,7 +34,7 @@ exports.home = function() {
   };
 };
 
-exports.modsItems = function() {
+const modsItems = () => {
   return {
     restrict: "AE",
     controller: "modsItemsController",
@@ -46,7 +46,7 @@ exports.modsItems = function() {
   };
 };
 
-exports.modsHierarchy = function() {
+const modsHierarchy = () => {
   return {
     restrict: "AE",
     controller: "modsHierarchyController",
@@ -61,7 +61,7 @@ exports.modsHierarchy = function() {
   };
 };
 
-exports.logIn = function() {
+const logIn = () => {
   return {
     restrict: "AE",
     controller: "logInController",
@@ -69,7 +69,7 @@ exports.logIn = function() {
   };
 }
 
-exports.newPost = function() {
+const newPost = () => {
   return {
     restrict: "AE",
     controller: "newPostController",
@@ -79,4 +79,14 @@ exports.newPost = function() {
       cancel: "=cancel"
     }
   };
+};
+
+export {
+  root,
+  customNavBar,
+  home,
+  modsItems,
+  modsHierarchy,
+  logIn,
+  newPost,
 };

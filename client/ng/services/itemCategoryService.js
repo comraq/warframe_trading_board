@@ -1,13 +1,13 @@
-module.exports = [ "$http", "$q", function($http, $q) {
-  var cache = {};
+const itemCategoryService = [ "$http", "$q", ($http, $q) => {
+  const cache = {};
 
   return {
-    getCategory: function getCategory(path) {
+    getCategory: path => {
       if (cache[path] && cache[path].category !== undefined)
         return cache[path].category;
 
       return $http.get("/api/category" + path)
-        .then(function success(res) {
+        .then(res => {
           // API returns ItemCategory Object
           if (!cache[path])
             cache[path] = {};
@@ -15,18 +15,15 @@ module.exports = [ "$http", "$q", function($http, $q) {
           cache[path].category = res.data.category;
           return res.data.category;
   
-        }, function error(err) {
-          // Promise rejected, return null
-          return null;
-        });
+        }, err => null);// Promise rejected, return null
     },
 
-    getChildren: function getChildren(path) {
+    getChildren: path => {
       if (cache[path] && cache[path].children !== undefined)
         return cache[path].children;
 
       return $http.get("/api/category/children" + path)
-        .then(function success(res) {
+        .then(res => {
           if (!cache[path])
             cache[path] = {};
 
@@ -36,16 +33,12 @@ module.exports = [ "$http", "$q", function($http, $q) {
           }
   
           // API returns array of children category names
-          cache[path].children = res.data.children.map(function(e) {
-            return e.name;
-          });
+          cache[path].children = res.data.children.map(e => e.name);
           return cache[path].children;
   
-        }, function error(err) {
-          // Promise rejected, return null
-          return null;
-        });
+        }, err => null); // Promise rejected, return null
     }
   };
-
 }];
+
+export default itemCategoryService;

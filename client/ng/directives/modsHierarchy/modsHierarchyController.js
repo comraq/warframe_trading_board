@@ -1,21 +1,22 @@
-module.exports = [ "$scope", "$state", function($scope, $state) {
+const modsHierarchyController = [ "$scope", "$state",
+                                  function($scope, $state) {
   $scope.ctrl = this;
   this.scope = $scope;
 
-  var debug = false;
-  var nextLevel = {};
+  let debug = false;
+  let nextLevel = {};
 
-  this.toNextState = function toNextState(selectedOption) {
+  this.toNextState = selectedOption => {
     // Inherit all stateParams but the 'level' stateParam
-    var nextParams = $state.params;
+    let nextParams = $state.params;
     nextParams[nextLevel.value.toLowerCase()] = selectedOption;
     delete nextParams.level;
 
     $state.go("root.mods." + nextLevel.value.toLowerCase(), nextParams);
   };
 
-  function reloadDirective() {
-    var stateParams = $state.params;
+  const reloadDirective = () => {
+    let stateParams = $state.params;
 
     switch(stateParams.level) {
       case "Mode":
@@ -61,3 +62,5 @@ module.exports = [ "$scope", "$state", function($scope, $state) {
 
   reloadDirective();
 }];
+
+export default modsHierarchyController;

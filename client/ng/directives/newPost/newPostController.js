@@ -7,10 +7,10 @@
  * $scope.cancel = function passed in from outer scope to cancel/return
  */
 
-module.exports = [ "$scope",
-                   "$http",
-                    function($scope, $http) {
-  var debug = false;
+const newPostController = [ "$scope",
+                            "$http",
+                             function($scope, $http) {
+  let debug = false;
 
   $scope.ctrl = this;
   this.scope = $scope;
@@ -36,8 +36,8 @@ module.exports = [ "$scope",
     }
   };
 
-  this.submitPost = function submitPost() {
-    var category = this.scope.newItem.category["_id"];
+  this.submitPost = () => {
+    const category = this.scope.newItem.category["_id"];
     this.scope.newItem.category.name = category;
     this.scope.newItem.category.parent = null;
     this.scope.newItem.category.ancestors = null;
@@ -50,14 +50,14 @@ module.exports = [ "$scope",
                    "Content-Type": "application/json"
                  }
                })
-         .then(function successCallback(res) {
+         .then(res => {
            if (debug) {
              console.log("newPostController, submitPost success!");
              console.log(res);
            }
            this.cancelPost();
 
-         }.bind(this), function errorCallback(err) {
+         }, err => {
            if (debug) {
              console.log("newPostController, submitPost error!");
              console.log(err);
@@ -65,9 +65,7 @@ module.exports = [ "$scope",
          });
   };
 
-  this.cancelPost = function cancelPost() {
-    this.scope.cancel();
-  };
+  this.cancelPost = () => this.scope.cancel()
 
   if (!this.scope.newItem.expiry)
     this.scope.newItem.expiry = (new Date())
@@ -82,3 +80,5 @@ module.exports = [ "$scope",
     };
   }
 }];
+
+export default newPostController;

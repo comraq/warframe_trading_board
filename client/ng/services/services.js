@@ -1,3 +1,5 @@
-exports.userSessionService = require("./userSessionService");
+import userSessionService from "./userSessionService";
 
-exports.itemCategoryService = require("./itemCategoryService");
+import itemCategoryService from "./itemCategoryService";
+
+export { userSessionService, itemCategoryService };
